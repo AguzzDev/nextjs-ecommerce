@@ -1,0 +1,47 @@
+.slider {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+}
+@media (max-width: 1200px) {
+  .slider {
+    flex-direction: column;
+  }
+}
+.slider .carousel {
+  width: 15%;
+  text-align: left;
+}
+.slider .carousel .thumbs-wrapper {
+  margin: 0px;
+}
+.slider .carousel .thumb {
+  width: 200px;
+}
+.slider .carousel .thumb.selected {
+  border: 2px solid black;
+}
+
+@font-face {
+  font-family: "Nike";
+  src: url("./font/Nike-TG.woff2");
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  * {
+    @apply p-0 box-border;
+  }
+  body {
+    @apply overflow-x-hidden font-nike bg-[#F6F6F6];
+  }
+  input {
+    @apply outline-none;
+  }
+  input::placeholder {
+    @apply text-gray-500;
+  }
+}

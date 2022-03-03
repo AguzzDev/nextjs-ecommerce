@@ -1,0 +1,29 @@
+export const LOADING_FALSE = "LOADING_FALSE"
+export const LOADING_TRUE = "LOADING_TRUE"
+
+//USER
+export const USER_REGISTER = "USER_REGISTER"
+export const USER_LOGIN = "USER_LOGIN"
+export const USER_LOGOUT = "USER_LOGOUT"
+export const GET_USER = "GET_USER "
+
+//PRODUCTS
+export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS"
+export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID"
+export const GET_FILTERED_PRODUCTS = "GET_FILTERED_PRODUCTS"
+
+//CART
+export const ADD_TO_CART = "ADD_TO_CART"
+export const GET_USER_CART = "GET_USER_CART"
+export const REMOVE_ITEM = "REMOVE_ITEM"
+export const DELETE_CART = "DELETE_CART"
+
+//FAVOURITE
+export const ADD_FAVOURITE = "ADD_FAVOURITE"
+export const GET_FAVOURITE = "GET_FAVOURITE"
+export const REMOVE_FAVOURITE = "REMOVE_FAVOURITE"
+export const DELETE_FAVOURITE = "DELETE_FAVOURITE"
+
+//ORDER
+export const SEND_ORDER = "SEND_ORDER"
+export const GET_ORDER = "GET_ORDER"
