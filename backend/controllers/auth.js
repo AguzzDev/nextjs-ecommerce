@@ -5,7 +5,6 @@ import { asyncWrapper } from "../middleware/asyncWrapper.js"
 import { createCustomError } from "../utils/customErrors.js"
 
 export const register = asyncWrapper(async (req, res) => {
-  console.log(req.body)
   try {
     const newUser = new User({
       username: req.body.username,
@@ -17,7 +16,6 @@ export const register = asyncWrapper(async (req, res) => {
     })
 
     const savedUser = await newUser.save()
-console.log(savedUser)
     const accessToken = jwt.sign(
       {
         id: savedUser._id,
