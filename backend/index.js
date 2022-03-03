@@ -30,7 +30,7 @@ mongoose
 app.use(
   cors({
     credentials: true,
-    origin: ["https://nextjs-ecommerce-flame.vercel.app","http://localhost:3000"]
+    origin: ["https://nextjs-ecommerce-ten-eosin.vercel.app","http://localhost:3000"]
   })
 )
 app.use(express.json())
