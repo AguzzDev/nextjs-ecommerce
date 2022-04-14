@@ -22,9 +22,26 @@
   border: 2px solid black;
 }
 
+.swiper-details .swiper-button-prev {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: rotate(90deg);
+}
+.swiper-details .swiper-button-next {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: rotate(90deg);
+}
+
 @font-face {
   font-family: "Nike";
   src: url("./font/Nike-TG.woff2");
+}
+@font-face {
+  font-family: "PT-Sans";
+  src: url("./font/Inter.ttf");
 }
 
 @tailwind base;
@@ -35,13 +52,61 @@
   * {
     @apply p-0 box-border;
   }
-  body {
-    @apply overflow-x-hidden font-nike bg-[#F6F6F6];
+  .shop-body {
+    @apply overflow-hidden font-nike bg-[#F6F6F6];
   }
-  input {
+  .shop-body input,
+  .shop-body select {
     @apply outline-none;
   }
-  input::placeholder {
+  .shop-body h1 {
+    @apply text-xl md:text-3xl font-bold;
+  }
+  .shop-body h2 {
+    @apply text-lg md:text-2xl;
+  }
+  .shop-body input::placeholder {
     @apply text-gray-500;
+  }
+  .mercadopago button {
+    @apply bg-transparent w-full p-0 m-0 font-bold py-1;
+  }
+  .button {
+    @apply px-5 py-3 mt-3 text-white bg-black rounded-md;
+  }
+
+  .dashboard-body {
+    @apply bg-white dark:bg-gray-900 dark:bg-opacity-95 font-PT-Sans;
+  }
+  .dashboard-body input,
+  .dashboard-body textarea,
+  .dashboard-body select,
+  .dashboard-body option {
+    @apply dark:bg-gray-600 bg-gray-200 outline-none dark:text-gray-200 text-black;
+  }
+  .dashboard-body textarea {
+    resize: none;
+  }
+  .dashboard-body h1,
+  .dashboard-body h2,
+  .dashboard-body h3,
+  .dashboard-body h4,
+  .dashboard-body h5,
+  .dashboard-body p,
+  .dashboard-body label,
+  .dashboard-body select,
+  .dashboard-body option ,
+  .dashboard-body span,
+  .dashboard-body strong,
+  .dashboard-body a,
+  .dashboard-body tr,
+  .dashboard-body td {
+    @apply dark:text-white text-black;
+  }
+  .dashboard-body ::placeholder {
+    @apply dark:text-gray-200 text-black;
+  }
+  .darkmode {
+    @apply border dark:border-gray-800 border-gray-100 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-40;
   }
 }

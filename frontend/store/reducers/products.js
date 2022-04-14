@@ -2,12 +2,14 @@ import {
   LOADING_TRUE,
   LOADING_FALSE,
   GET_ALL_PRODUCTS,
-  GET_PRODUCT_BY_ID,
-  GET_FILTERED_PRODUCTS,
+  GET_FILTERED_CATEGORIES,
+  CREATE_PRODUCT,
+  DELETE_PRODUCT,
+  UPDATE_PRODUCT,
 } from "store/constants/actionsType"
 
 export const products = (
-  state = { products: [], search: [], isLoading: true },
+  state = { products: [], search: [], filter: [], isLoading: true },
   action
 ) => {
   switch (action.type) {
@@ -16,9 +18,12 @@ export const products = (
     case LOADING_FALSE:
       return { ...state, isLoading: false }
     case GET_ALL_PRODUCTS:
-    case GET_PRODUCT_BY_ID:
-    case GET_FILTERED_PRODUCTS:
       return { ...state, products: action.payload }
+    case GET_FILTERED_CATEGORIES:
+      return {
+        ...state,
+        filter: action.payload,
+      }
     default:
       return state
   }

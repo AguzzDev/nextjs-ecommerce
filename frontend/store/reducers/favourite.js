@@ -21,9 +21,6 @@ export const favourite = (state = { favourite: [] }, action) => {
         ),
       }
     }
-    case DELETE_FAVOURITE: {
-      return { ...state, favourite: [] }
-    }
     case GET_FAVOURITE: {
       return {
         ...state,

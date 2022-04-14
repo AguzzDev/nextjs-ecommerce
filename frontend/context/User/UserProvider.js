@@ -2,21 +2,23 @@ import UserContext from "./UserContext"
 import { useEffect, useState } from "react"
 import { parseCookies } from "nookies"
 
-export const UserProvider = ({ children }) => {
+const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState("")
   const [user, setUser] = useState("")
 
-  const { profile } = parseCookies()
-
   useEffect(() => {
-    if (profile) {
-      setUser(JSON.parse(profile))
-      setUserId(JSON.parse(profile)._id)
-    } else {
-      setUser(false)
-      setUserId(false)
+    if (window !== "undefined") {
+      const profile = JSON.parse(localStorage.getItem("profile"))
+
+      if (profile) {
+        setUser(profile)
+        setUserId(profile._id)
+      } else {
+        setUser(false)
+        setUserId(false)
+      }
     }
-  }, [profile])
+  }, [])
 
   return (
     <UserContext.Provider value={{ user, userId }}>
@@ -24,3 +26,5 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   )
 }
+
+export default UserProvider

@@ -5,6 +5,8 @@ import { auth } from "./auth"
 import { cart } from "./cart"
 import { favourite } from "./favourite"
 import { order } from "./order"
+import { users } from "./users"
+import { history } from "./history"
 
 export default combineReducers({
   products,
@@ -12,4 +14,6 @@ export default combineReducers({
   cart,
   favourite,
   order,
+  users,
+  history,
 })

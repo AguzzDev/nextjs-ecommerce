@@ -2,17 +2,18 @@ import { asyncWrapper } from "../middleware/asyncWrapper.js"
 import User from "../models/User.js"
 
 export const getFavourite = asyncWrapper(async (req, res) => {
-  const data = await User.findOne({ _id: req.params.id })
+  const data = await User.findById(req.user.id)
   res.status(200).json(data.favourite)
 })
 
 export const addFavourite = asyncWrapper(async (req, res) => {
   const body = req.body
 
-  User.findOne({ _id: req.user.id }, (_, userInfo) => {
+  User.findById(req.user.id, (_, userInfo) => {
     let duplicate = false
+
     userInfo.favourite.forEach((item) => {
-      if (item.productId == body.product._id) {
+      if (item.productId == body._id) {
         duplicate = true
       }
     })
@@ -20,16 +21,16 @@ export const addFavourite = asyncWrapper(async (req, res) => {
     if (duplicate) {
       return res.status(404).json({ message: "product already added" })
     } else {
-      User.findOneAndUpdate(
-        { _id: req.user.id },
+      User.findByIdAndUpdate(
+        req.user.id,
         {
           $push: {
             favourite: {
-              productId: body.product._id,
-              title: body.product.title,
-              img: body.product.img,
-              slug: body.product.slug,
-              price: body.product.price,
+              productId: body._id,
+              title: body.title,
+              img: body.img,
+              slug: body.slug,
+              price: body.price,
               createdAt: Date.now(),
             },
           },
@@ -45,13 +46,13 @@ export const addFavourite = asyncWrapper(async (req, res) => {
 })
 
 export const deleteItem = asyncWrapper(async (req, res) => {
-  const { favourite } = await User.findOne({ _id: req.params.id })
+  const { favourite } = await User.findOne({ _id: req.user.id })
   const favouriteFilter = favourite.filter(
     (pId) => pId.productId !== req.body.productId
   )
 
   await User.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.user.id },
     { favourite: favouriteFilter },
     { new: true }
   )

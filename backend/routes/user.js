@@ -7,7 +7,6 @@ import {
   deleteUser,
   getAllUser,
   getUser,
-  getUserStats,
   updateUser,
 } from "../controllers/user.js"
 
@@ -16,8 +15,7 @@ const router = app.Router()
 router.put("/:id", verifyTokenAndAuthorization, updateUser)
 router.delete("/:id", verifyTokenAndAuthorization, deleteUser)
 
-router.get("/:id", getUser)
+router.get("/:id", verifyTokenAndAdmin, getUser)
 router.get("/", verifyTokenAndAdmin, getAllUser)
-router.get("/stats", verifyTokenAndAdmin, getUserStats)
 
 export default router

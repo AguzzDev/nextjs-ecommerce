@@ -1,102 +1,117 @@
-import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
-import { MinusIcon, PlusIcon } from "@heroicons/react/outline"
-import { useContext } from "react"
-import { Carousel } from "react-responsive-carousel"
+import { useDispatch } from "react-redux"
+import { useContext, useMemo, useState } from "react"
 import InnerImageZoom from "react-inner-image-zoom"
-import axios from "axios"
 import ReactSlidy from "react-slidy"
+import useSWR from "swr"
+import axios from "axios"
 
-import { colorType, priceFormat } from "utils/format"
-import { IconXS } from "components/Icons"
+import { colorType, priceFormat, descFormat } from "utils/format"
 import { addToCart } from "store/actions/cart"
-import Layout from "components/Layout"
+import Layout from "components/shop/Layout"
 import ModalContext from "context/Modal/ModalContext"
 import UserContext from "context/User/UserContext"
 import { API_URL } from "utils/urls"
+import { DisclosureProducts } from "components/shop/Disclosure/DisclosureProducts"
+import { SliderDetails } from "components/shop/Slider/SliderDetails"
+import { setHistory } from "store/actions/history"
+import { Slider } from "components/shop/Slider/Slider"
 
-export default function Slug({ data }) {
+export default function Slug({ slug }) {
   const [actualSlide, setActualSlide] = useState(0)
-
   const updateSlide = ({ currentSlide }) => {
     setActualSlide(currentSlide)
   }
+  const { data } = useSWR(`${API_URL}/products/${slug}`)
+  const product = data?.data
 
   const { openModal } = useContext(ModalContext)
   const { userId } = useContext(UserContext)
 
-  const { repeated } = useSelector((state) => state.cart)
   const [errors, setErrors] = useState("")
-  const [products, setProduct] = useState([])
   const [color, setColor] = useState([])
-  const [size, setSize] = useState([])
-  const [quantity, setQuantity] = useState(1)
+  const [size, setSize] = useState("")
+  const [quantity, setQuantity] = useState(0)
   const dispatch = useDispatch()
-  const { title, img, size: sizeA, color: colorA, price } = data
 
-  const handleQuantity = (type) => {
-    if (type === "asc") {
-      setQuantity(quantity + 1)
-    } else {
-      if (quantity > 1) {
-        setQuantity(quantity - 1)
-      }
-    }
+  const dataQuantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+  const handleQuantity = (quantity) => {
+    setQuantity(quantity)
   }
-  const handleSize = (e) => {
-    setSize(e.target.value)
+  const handleSize = (size) => {
+    setSize(size)
   }
+
   const addCart = (product) => {
     if (userId) {
-      if (repeated) {
-        setErrors("Este producto ya esta en el carrito")
-      } else if (color.length === 0 && size.length === 0) {
-        setErrors("Indica el color y la talla")
+      if (color.length === 0 && size.length === 0 && quantity === 0) {
+        setErrors("Completa las opciones")
       } else if (color.length === 0) {
         setErrors("Indica el color")
       } else if (size.length === 0) {
         setErrors("Indica la talla")
+      } else if (quantity === 0) {
+        setErrors("Indica la cantidad")
       } else {
         setErrors("")
-        setProduct(Array.from(new Set([product])))
-        dispatch(addToCart({ userId, product, quantity, color, size }))
+        dispatch(addToCart({ product, quantity, color, size }))
       }
     } else {
       return openModal()
     }
   }
 
+  useMemo(() => {
+    if (product) {
+      dispatch(setHistory(product?._id))
+    }
+  }, [product])
+
   return (
-    <Layout title={`${data.title} | Nike Clon`}>
-      <div className="flex w-full h-screen pt-10">
+    <Layout title={`${product?.title}`}>
+      <div className="flex flex-col w-full pt-5 md:flex-row md:pt-10">
         <>
-          <div className="w-2/4">
-            <div className="flex flex-col lg:flex-row-reverse">
-              <div className="lg:w-3/4 ml-3">
-                <ReactSlidy doAfterSlide={updateSlide} slide={actualSlide}>
-                  <InnerImageZoom
-                    className="h-full w-full object-cover"
-                    src={img}
-                    zoomSrc={img}
-                  />
+          <div className="md:w-2/4">
+            <div className="flex flex-col md:flex-row-reverse">
+              <div className="md:ml-3 lg:w-3/4 xl:w-full">
+                <ReactSlidy
+                  showArrows={false}
+                  doAfterSlide={updateSlide}
+                  slide={actualSlide}
+                >
+                  {!product?.img
+                    ? null
+                    : product?.img?.map((src) => (
+                        <InnerImageZoom
+                          key={src}
+                          className="z-50 w-full h-full"
+                          src={src}
+                          zoomSrc={src}
+                          zoomType="hover"
+                        />
+                      ))}
                 </ReactSlidy>
               </div>
-              <div className="w-1/4 h-32">
-                <img src={img} className="h-full w-full object-contain" />
+              <div className="flex-col hidden w-5/6 text-left md:flex lg:w-1/4 xl:w-2/6">
+                <SliderDetails updateSlide={updateSlide} img={product?.img} />
               </div>
             </div>
           </div>
 
-          <div className="px-5 flex flex-col space-y-2 w-2/4">
-            <h1 className="text-3xl font-bold">{title}</h1>
-            <p className="text-xl">{priceFormat(price)}</p>
+          <div className="flex flex-col mt-10 space-y-2 md:px-5 md:w-2/4 md:mt-0">
+            <h1 className="text-xl font-bold md:text-3xl">{product?.title}</h1>
+
+            <>{descFormat(product?.desc)}</>
+
+            <p className="md:text-xl">{priceFormat(product?.price)}</p>
 
             <div className="flex flex-col space-y-5">
               <div>
-                <h1>Color</h1>
+                <p>Color</p>
                 <div className="flex space-x-3">
-                  {colorA?.map((c) => (
+                  {product?.color?.map((c) => (
                     <button
+                      key={c}
                       onClick={() => setColor(c)}
                       style={{ backgroundColor: colorType(c) }}
                       className={`${
@@ -106,34 +121,24 @@ export default function Slug({ data }) {
                   ))}
                 </div>
               </div>
-              <div className="flex space-x-3">
-                {sizeA?.map((s) => (
-                  <button
-                    value={s}
-                    onClick={(e) => handleSize(e)}
-                    className={`${
-                      size === s && "border-black"
-                    } border-2 bg-gray-200 rounded-md py-3 w-32 uppercase`}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-              <div className="flex bg-gray-200 rounded-xl py-3 w-max">
-                <button className="px-3" onClick={() => handleQuantity("asc")}>
-                  <IconXS Icon={PlusIcon} />
-                </button>
-                <div className="border-x-2 px-3 border-gray-400">
-                  {quantity}
-                </div>
-                <button className="px-3" onClick={() => handleQuantity("desc")}>
-                  <IconXS Icon={MinusIcon} />
-                </button>
-              </div>
-              <p>{errors}</p>
+
+              <DisclosureProducts
+                title="Elige talla"
+                data={product?.size}
+                dataHandle={size}
+                handle={handleSize}
+              />
+              <DisclosureProducts
+                title="Elige cantidad"
+                data={dataQuantity}
+                dataHandle={quantity}
+                handle={handleQuantity}
+              />
+
+              {!errors ? null : <p>{errors}</p>}
               <button
-                onClick={() => addCart(data)}
-                className="bg-black rounded-sm py-2 text-white w-52"
+                onClick={() => addCart(product)}
+                className="py-2 text-white bg-black rounded-sm w-52"
               >
                 Añadir al carrito
               </button>
@@ -141,13 +146,16 @@ export default function Slug({ data }) {
           </div>
         </>
       </div>
+
+      {/* <section className="py-10">
+        <h1 className="my-2">Articulos relacionados</h1>
+        <Slider products={product} />
+      </section> */}
     </Layout>
   )
 }
 export const getStaticPaths = async () => {
-  const data = await axios
-    .get(`${API_URL}/products`)
-    .then((res) => res.data)
+  const data = await axios.get(`${API_URL}/products`).then((res) => res.data)
 
   return {
     paths: data.data.map((d) => ({
@@ -159,12 +167,9 @@ export const getStaticPaths = async () => {
   }
 }
 export const getStaticProps = async ({ params: { slug } }) => {
-  const data = await axios.get(`${API_URL}/products/${slug}`)
-
   return {
     props: {
-      data: data.data,
+      slug,
     },
-    revalidate: 100,
   }
 }

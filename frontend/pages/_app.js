@@ -1,73 +1,81 @@
-import { ModalProvider } from "context/Modal/ModalProvider"
-import { UserProvider } from "context/User/UserProvider"
+import { useRouter } from "next/router"
 import { wrapper } from "store"
 import { useDispatch } from "react-redux"
 import React, { useEffect } from "react"
+import { ToastContainer } from "react-toastify"
+import { AnimatePresence } from "framer-motion"
+import jwtDecode from "jwt-decode"
+import axios from "axios"
+import { SWRConfig } from "swr"
+
+import { getOrder } from "store/actions/order"
 import { getCart } from "store/actions/cart"
 import { getFavourite } from "store/actions/favourite"
-import { getOrder } from "store/actions/order"
-import { ToastContainer } from "react-toastify"
-import ReactGA from "react-ga"
-import { AnimatePresence } from "framer-motion"
-import { destroyCookie, parseCookies } from "nookies"
-import jwtDecode from "jwt-decode"
+import { getHistoryUser } from "store/actions/history"
+import SidebarProvider from "context/Sidebar/SidebarProvider"
+import ModalProvider from "context/Modal/ModalProvider"
+import DarkmodeProvider from "context/Darkmode/DarkmodeProvider"
+import UserProvider from "context/User/UserProvider"
 
 import "styles/globals.css"
 import "react-toastify/dist/ReactToastify.css"
-import "react-responsive-carousel/lib/styles/carousel.min.css"
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css"
+import "react-slidy/lib/styles.css"
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 import "swiper/css/scrollbar"
 
-const MyApp = ({ Component, pageProps, router }) => {
+const MyApp = ({ Component, pageProps }) => {
   const dispatch = useDispatch()
+  const router = useRouter()
 
   useEffect(() => {
-    const { profile } = parseCookies()
-
+    const profile = JSON.parse(localStorage.getItem("profile"))
+console.log(profile)
     if (profile) {
-      const profileParse = JSON.parse(profile)
+      const dateNow = new Date().getTime()
+      const { exp } = jwtDecode(profile.accessToken)
+      const expirationTime = exp * 1000
 
-      const { exp } = jwtDecode(profileParse.accessToken)
-      const expirationTime = exp * 1000 - 60000
-      if (Date.now() >= expirationTime) {
-        destroyCookie(null, "profile")
+      if (dateNow >= expirationTime) {
+        localStorage.removeItem("profile")
       }
 
-      dispatch(getCart(profileParse._id))
-      dispatch(getFavourite(profileParse._id))
-      dispatch(getOrder(profileParse._id))
+      dispatch(getHistoryUser())
+      dispatch(getCart())
+      dispatch(getFavourite())
+      dispatch(getOrder())
     }
   }, [])
 
-  useEffect(() => {
-    if (process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS) {
-      ReactGA.initialize(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS)
-      ReactGA.pageview(window.location.pathname + window.location.search)
+  const Providers = (props) => {
+    const { components = [], children } = props
 
-      const handleRouteChange = (url) => {
-        ReactGA.pageview(url)
-      }
-
-      router.events.on("routeChangeComplete", handleRouteChange)
-
-      return () => {
-        router.events.off("routeChangeComplete", handleRouteChange)
-      }
-    }
-  }, [])
-
+    return (
+      <>
+        {components.reduceRight((acc, Comp) => {
+          return <Comp>{acc}</Comp>
+        }, children)}
+      </>
+    )
+  }
   return (
-    <UserProvider>
-      <ModalProvider>
+    <SWRConfig value={{ fetcher: (url) => axios(url).then((res) => res) }}>
+      <Providers
+        components={[
+          DarkmodeProvider,
+          SidebarProvider,
+          UserProvider,
+          ModalProvider,
+        ]}
+      >
         <ToastContainer />
         <AnimatePresence exitBeforeEnter initial={false}>
           <Component {...pageProps} key={router.asPath} />
         </AnimatePresence>
-      </ModalProvider>
-    </UserProvider>
+      </Providers>
+    </SWRConfig>
   )
 }
 

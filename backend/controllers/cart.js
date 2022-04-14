@@ -7,14 +7,15 @@ export const getAllCart = asyncWrapper(async (req, res) => {
 })
 
 export const getCart = asyncWrapper(async (req, res) => {
-  const data = await User.findOne({ _id: req.params.id })
+  const data = await User.findById(req.user.id)
+
   res.status(200).json(data.cart)
 })
 
 export const createCart = asyncWrapper(async (req, res) => {
-  const body = req.body
+  const body = req.body.product
 
-  User.findOne({ _id: body.userId }, (_, userInfo) => {
+  User.findOne({ _id: req.user.id }, (_, userInfo) => {
     let duplicate = false
 
     userInfo.cart.forEach((item) => {
@@ -24,10 +25,10 @@ export const createCart = asyncWrapper(async (req, res) => {
     })
 
     if (duplicate) {
-      return res.status(200).json({repeated: true})
+      return res.status(200).json("Ya en el carrito")
     } else {
       User.findOneAndUpdate(
-        { _id: req.user.id},
+        { _id: req.user.id },
         {
           $push: {
             cart: {
@@ -52,11 +53,11 @@ export const createCart = asyncWrapper(async (req, res) => {
 })
 
 export const deleteItem = asyncWrapper(async (req, res) => {
-  const { cart } = await User.findOne({ _id: req.params.id })
+  const { cart } = await User.findOne({ _id: req.user.id })
   const cartFilter = cart.filter((pId) => pId.productId !== req.body.productId)
 
   await User.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.user.id },
     { cart: cartFilter },
     { new: true }
   )
@@ -65,7 +66,7 @@ export const deleteItem = asyncWrapper(async (req, res) => {
 
 export const deleteCart = asyncWrapper(async (req, res) => {
   const data = await User.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.user.id },
     { cart: [] },
     { new: true }
   )

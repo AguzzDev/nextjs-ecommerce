@@ -1,16 +1,15 @@
+import { useUploadFiles } from "hooks/useUploadFiles"
 import * as api from "lib/api"
 import {
-  GET_ALL_PRODUCTS,
-  GET_PRODUCT_BY_ID,
   LOADING_TRUE,
   LOADING_FALSE,
-  GET_FILTERED_PRODUCTS,
+  GET_ALL_PRODUCTS,
 } from "store/constants/actionsType"
 
-export const getFilteredProducts = (params) => async (dispatch) => {
+export const getAllProducts = () => async (dispatch) => {
   try {
     dispatch({ type: LOADING_TRUE })
-    const { data } = await api.getFilteredProducts(params)
+    const { data } = await api.getAllProducts()
 
     dispatch({ type: GET_ALL_PRODUCTS, payload: data })
     dispatch({ type: LOADING_FALSE })
@@ -19,39 +18,28 @@ export const getFilteredProducts = (params) => async (dispatch) => {
   }
 }
 
-export const getAllProducts = () => async (dispatch) => {
+export const createProduct = (param) => async (dispatch) => {
   try {
-    dispatch({ type: LOADING_TRUE })
-    const { data } = await api.getAllProducts()
-
-    dispatch({ type: GET_FILTERED_PRODUCTS, payload: data })
-    dispatch({ type: LOADING_FALSE })
+    await api.createProduct(param)
   } catch (error) {
     console.log(error)
   }
 }
 
-export const getProductById = (slug) => async (dispatch) => {
-  try {
-    dispatch({ type: LOADING_TRUE })
-
-    const { data } = await api.getProductById(slug)
-
-    dispatch({ type: GET_PRODUCT_BY_ID, payload: data })
-    dispatch({ type: LOADING_FALSE })
-  } catch (error) {
-    console.log(error)
+export const updateProduct =
+  ({ newData, id }) =>
+  async () => {
+    try {
+      const image = await useUploadFiles(newData[0].img)
+      await api.updateProduct({ ...newData[0], img: image }, id)
+    } catch (error) {
+      console.log(error)
+    }
   }
-}
 
-export const deleteProduct = (id) => async (dispatch) => {
+export const deleteProduct = (id) => async () => {
   try {
-    dispatch({ type: LOADING_TRUE })
-
-    const { data } = await api.deleteProduct(id)
-
-    dispatch({ type: GET_PRODUCT_BY_ID, payload: data })
-    dispatch({ type: LOADING_FALSE })
+    await api.deleteProduct(id)
   } catch (error) {
     console.log(error)
   }

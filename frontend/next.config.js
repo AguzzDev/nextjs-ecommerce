@@ -3,6 +3,21 @@ module.exports = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["localhost", "img01.ztat.net", "http2.mlstatic.com"],
+    domains: ["localhost", "res.cloudinary.com"],
+  },
+  module: {
+    
+    rules: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+      },
+    ],
+    optimization: {
+      removeAvailableModules: false,
+      removeEmptyChunks: false,
+      splitChunks: false,
+      runtimeChunk: true,
+    },
   },
 }

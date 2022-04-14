@@ -6,9 +6,9 @@ import {
 } from "store/constants/actionsType"
 import * as api from "lib/api"
 
-export const getCart = (id) => async (dispatch) => {
+export const getCart = () => async (dispatch) => {
   try {
-    const { data } = await api.getCart(id)
+    const { data } = await api.getCart()
 
     dispatch({ type: GET_USER_CART, payload: data })
   } catch (error) {
@@ -26,9 +26,9 @@ export const addToCart = (product) => async (dispatch) => {
   }
 }
 
-export const removeItem = (id, productId) => async (dispatch) => {
+export const removeItem = (productId) => async (dispatch) => {
   try {
-    const { data } = await api.removeItem({ id, productId })
+    const { data } = await api.removeItem( productId)
 
     dispatch({ type: REMOVE_ITEM, payload: data })
   } catch (error) {
@@ -36,9 +36,9 @@ export const removeItem = (id, productId) => async (dispatch) => {
   }
 }
 
-export const deleteCart = (id) => async (dispatch) => {
+export const deleteCart = () => async (dispatch) => {
   try {
-    await api.deleteCart(id)
+    await api.deleteCart()
 
     dispatch({ type: DELETE_CART })
   } catch (error) {

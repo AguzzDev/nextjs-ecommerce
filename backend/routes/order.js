@@ -1,10 +1,9 @@
 import {
   verifyToken,
-  verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
 } from "../middleware/verifyToken.js"
 import app from "express"
-import { createOrder, deleteOrder, getAllOrder, getIncome, getUserOrder, updateOrder } from "../controllers/order.js";
+import { createOrder, deleteOrder, getAllOrder, getUserOrder, updateOrder } from "../controllers/order.js";
 
 const router = app.Router()
 
@@ -13,7 +12,6 @@ router.put("/:id", verifyTokenAndAdmin, updateOrder);
 router.delete("/:id", verifyTokenAndAdmin, deleteOrder);
 
 router.get("/", verifyTokenAndAdmin, getAllOrder);
-router.get("/:userId", verifyToken, getUserOrder);
-router.get("/income", verifyTokenAndAdmin, getIncome);
+router.get("/:id", verifyToken, getUserOrder);
 
 export default router

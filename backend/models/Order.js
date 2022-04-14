@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 const OrderSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true },
+    paymentId: { type: String },
     products: [
       {
         productId: {
@@ -20,18 +21,19 @@ const OrderSchema = new mongoose.Schema(
     ],
     userInfo: [
       {
-        address: { type: String, required: true },
+        name: { type: String },
+        email: { type: String },
+        address: { type: String },
         city: { type: String },
-        state: { type: String },
+        province: { type: String },
         postal_code: { type: Number },
         country: { type: String },
-        cardType: { type: String },
-        lastNumbers: { type: String },
       },
     ],
-    createdAt: { type: String },
-    total: { type: Number, required: true },
+    createdAt: { type: Date },
     status: { type: String, default: "Pendiente" },
+    sending: { type: Boolean },
+    total: { type: Number, required: true },
   },
   { timestamps: true }
 )

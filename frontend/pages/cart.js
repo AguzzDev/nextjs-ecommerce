@@ -1,23 +1,24 @@
 import Link from "next/link"
-
-import Layout from "components/Layout"
 import { useSelector } from "react-redux"
-import { CartItems } from "components/CartItems"
+
+import Layout from "components/shop/Layout"
 import { priceFormat } from "utils/format"
+import { CartItems } from "components/shop/Modal/CartItems"
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
+  const total = cart.total + 0.21 * cart.total
 
   return (
     <Layout title={`Carrito (${cart.products.length} artículos)`}>
-      <section className="flex space-x-8 my-5">
+      <section className="flex my-5 space-x-8">
         <div
           className={`bg-white w-4/6 ${
-            cart.products.length === 0 ? "h-screen" : "h-full"
+            cart.products.length === 0 ? "h-[70vh]" : "h-full"
           } p-5`}
         >
           <h1 className="text-2xl">Tu carrito</h1>
-
+          {cart.products.length === 0 && <p>Tu carrito esta vacio.</p>}
           <div className="flex flex-col">
             <CartItems />
           </div>
@@ -26,26 +27,24 @@ const Cart = () => {
         <div className="sticky top-20 flex flex-col bg-white p-5 w-2/6 h-[35vh]">
           <h1 className="text-2xl">Total</h1>
 
-          <div className="flex flex-col space-y-3 justify-center h-full">
+          <div className="flex flex-col justify-center h-full space-y-3">
             <div className="flex">
               <p className="w-3/4">Subtotal</p>
               <p>{priceFormat(cart.total)}</p>
             </div>
             <div className="flex">
-              <p className="w-3/4">Envio</p>
-              <p>$ 0,00</p>
-            </div>
-            <div className="flex">
-              <p className="w-3/4">Total (IVA incluido)</p>
-              <p>{priceFormat(cart.total)}</p>
+              <p className="w-3/4">Total (IVA 21%)</p>
+              <p>{priceFormat(total)}</p>
             </div>
           </div>
           <div className="flex items-end">
-            <Link href="/checkout">
-              <button className="py-3 px-5 w-full bg-black text-white rounded-md">
-                Pagar
-              </button>
-            </Link>
+            {cart.products.length >= 1 && (
+              <Link href="/checkout">
+                <button className="w-full px-5 py-3 text-white bg-black rounded-md">
+                  Pagar
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import ModalContext from "./ModalContext"
 import { useState } from "react"
 
-export const ModalProvider = ({ children }) => {
+const ModalProvider = ({ children }) => {
   let [isOpen, setIsOpen] = useState(false)
 
   const openModal = () => {
@@ -17,3 +17,5 @@ export const ModalProvider = ({ children }) => {
     </ModalContext.Provider>
   )
 }
+
+export default ModalProvider

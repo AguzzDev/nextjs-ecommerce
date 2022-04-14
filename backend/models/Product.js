@@ -5,16 +5,16 @@ mongoose.plugin(slug)
 
 const ProductSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true, unique: true },
+    title: { type: String, unique: true },
     slug: { type: String, slug: "title" },
-    desc: { type: String, required: true, },
-    img: { type: String, required: true },
+    desc: { type: String },
+    img: { type: Array, default: "" },
     categories: { type: Array },
     size: { type: Array },
-    color:{ type: Array },
-    price: { type: Number, required: true },
+    color: { type: Array },
+    price: { type: Number },
   },
   { timestamps: true }
-);
+)
 
-export default mongoose.model("Product", ProductSchema);
+export default mongoose.model("Product", ProductSchema)

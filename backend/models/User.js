@@ -9,8 +9,14 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    address: { type: String, required: true },
+    city: { type: String, required: true },
+    postal_code: { type: Number, required: true },
+    country: { type: String, required: true },
+    province: { type: String, required: true },
     cart: { type: Array },
     favourite: { type: Array },
+    changePassword: { type: String },
   },
   { timestamps: true }
 )

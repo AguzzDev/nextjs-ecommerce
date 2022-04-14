@@ -1,15 +1,16 @@
+export const descFormat = (data) => {
+  return data?.includes("\n") ? data.split("\n").map((p) => <p>{p}</p>) : data
+}
 export const titleFilter = (state) => {
-  return state === "all"
+  return state === 0
     ? "Todos"
-    : state === "last30Days"
+    : state === 1
     ? "Últimos 30 dias"
-    : state === "lastMonth"
-    ? "Más de 1 mes"
-    : state === "last3Month"
+    : state === 3
     ? "Más de 3 meses"
-    : state === "last6Month"
+    : state === 6
     ? "Más de 6 meses"
-    : state === "last12Month"
+    : state === 12
     ? "Más de 12 meses"
     : null
 }
@@ -17,14 +18,14 @@ export const cardBrand = (type) => {
   return type === "visa" ? "/visa.svg" : "/mastercard.svg"
 }
 export const dateMonthFormat = (date) => {
-  return new Date(Number(date)).toLocaleDateString("es-AR", {
+  return new Date(date).toLocaleDateString("es-AR", {
     day: "numeric",
     month: "long",
     year: "numeric",
   })
 }
 export const priceFormat = (price) =>
-  new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(
     price
   )
 export const colorType = (color) => {
