@@ -1,9 +1,8 @@
 import axios from "axios"
-import { API_URL } from "utils/urls"
 
 const API = () => {
   return axios.create({
-    baseURL: API_URL,
+    baseURL: "https://ecommerce-app-nextjs.herokuapp.com/api",
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
@@ -13,7 +12,7 @@ const APITOKEN = () => {
   const user = JSON.parse(window.localStorage.profile)
 
   return axios.create({
-    baseURL: API_URL,
+    baseURL: "https://ecommerce-app-nextjs.herokuapp.com/api",
     headers: {
       token: `Bearer ${user.accessToken}`,
       "Access-Control-Allow-Origin": "*",
