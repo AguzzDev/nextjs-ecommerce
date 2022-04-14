@@ -3,7 +3,6 @@ import Layout from "components/shop/Layout"
 import { Form, Formik } from "formik"
 import { useContext, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { validateChangePassword } from "utils/validate"
 import { changePassword } from "store/actions/auth"
 import UserContext from "context/User/UserContext"
 import { useRouter } from "next/router"
@@ -33,7 +32,6 @@ const changePasswordC = ({ param }) => {
 
             <Formik
               initialValues={{ password: "" }}
-              validationSchema={validateChangePassword}
               onSubmit={async (values) => {
                 setScreen(true)
                 dispatch(changePassword({ param, values }))

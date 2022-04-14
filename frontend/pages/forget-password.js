@@ -3,7 +3,6 @@ import Layout from "components/shop/Layout"
 import { Form, Formik } from "formik"
 import { useContext, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { validateForgetPassword } from "utils/validate"
 import { forgetPassword } from "store/actions/auth"
 import UserContext from "context/User/UserContext"
 import { useRouter } from "next/router"
@@ -30,7 +29,6 @@ const forgetPasswordC = () => {
 
               <Formik
                 initialValues={{ email: "" }}
-                validationSchema={validateForgetPassword}
                 onSubmit={async (values) => {
                   setScreen(true)
                   setMail(values.email)
