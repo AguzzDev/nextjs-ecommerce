@@ -12,17 +12,13 @@ import historyRoute from "./routes/history.js"
 import cors from "cors"
 import { errorHandler } from "./middleware/errorHandler.js"
 import path from "path"
-import { Server } from "socket.io"
 import { createServer } from "http"
 import bodyParser from "body-parser"
 import { sendMail } from "./utils/sendEmail.js"
 
 const app = express()
 const server = createServer(app)
-const io = new Server(server, {
-  cors: { origin: "http://localhost:3000", credentials: true },
-})
-sendMail()
+
 const __dirname = path.resolve()
 const loadPath = path.join(__dirname, "./.env")
 dotenv.config({ silent: false, path: loadPath })
