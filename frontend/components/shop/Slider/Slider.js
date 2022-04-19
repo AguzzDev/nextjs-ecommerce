@@ -9,7 +9,7 @@ import { useRouter } from "next/router"
 export const Slider = ({ title, products }) => {
   const router = useRouter()
   const path = router.pathname
-  console.log(path == "my_purchases")
+
   return (
     <div>
       {title ? <h1 className="pb-2">{title}</h1> : null}
@@ -21,17 +21,21 @@ export const Slider = ({ title, products }) => {
       >
         {products?.map((product, i) => (
           <SwiperSlide key={i}>
-            <Link href={`/products/${product.slug}`}>
+            <Link href={`/products/${product.slug || product.productId}`}>
               <a>
-                <div className="shadow-xl border border-gray-300">
-                  <div className="relative h-[20rem]">
+                <div className="border border-gray-300 shadow-xl">
+                  <div
+                    className={`relative ${
+                      path === "/my_purchases" ? "h-[15rem]" : "h-[20rem]"
+                    }`}
+                  >
                     <Image
                       {...(path !== "/my_purchases"
                         ? { src: product.img[0] }
                         : { src: product.img })}
                       layout="fill"
                       objectFit="cover"
-                      className="w-full absolute top-0"
+                      className="absolute top-0 w-full"
                     />
                   </div>
                   <div className="flex flex-col p-2">
