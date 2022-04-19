@@ -6,8 +6,9 @@ const router = express.Router()
 
 mercadopago.configure({
   access_token:
-    process.env.MERCADOPAGO_API_KEY,
+    "TEST-7450930257596680-030718-bf01b06ae7e7e8f6d1cd1f4e98763145-257575176",
 })
+
 router.post(
   "/",
   asyncWrapper(async (req, res) => {

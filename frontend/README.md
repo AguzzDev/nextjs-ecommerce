@@ -1,4 +1,3 @@
-
 # Ecommerce App
 
 ![](./screenshots/1.PNG)
