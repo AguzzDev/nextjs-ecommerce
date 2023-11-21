@@ -1,8 +1,8 @@
-import React from "react"
-import Head from "next/head"
-import { LazyMotion, m, domAnimation } from "framer-motion"
+import React from "react";
+import Head from "next/head";
+import { LazyMotion, m, domAnimation } from "framer-motion";
 
-import Navbar from "components/shop/Navbar"
+import Navbar from "components/shop/Navbar";
 
 const variants = {
   initial: { opacity: 0 },
@@ -11,13 +11,13 @@ const variants = {
     opacity: 1,
     transition: { duration: 1, delay: 1 },
   },
-}
+};
 
 const Layout = ({ children, props, sectionProps, title }) => {
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{title} | Ecommerce</title>
         <link rel="shortcut icon" href="/nike.png" />
       </Head>
 
@@ -35,7 +35,7 @@ const Layout = ({ children, props, sectionProps, title }) => {
         </main>
       </LazyMotion>
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
