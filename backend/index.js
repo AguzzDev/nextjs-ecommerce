@@ -24,7 +24,7 @@ const loadPath = path.join(__dirname, "./.env")
 dotenv.config({ silent: false, path: loadPath })
 
 app.get("/", (req, res) => {
-  res.send("hi")
+  res.send("Ok")
 })
 
 mongoose
@@ -38,10 +38,7 @@ app.use(bodyParser.json({ limit: "50mb" }))
 app.use(
   cors({
     credentials: true,
-    origin: [
-      "https://nextjs-ecommerce-aguzzdev.vercel.app",
-      "http://localhost:3000",
-    ],
+    origin: process.env.CORS_ORIGIN
   })
 )
 app.use(express.json())
@@ -55,6 +52,6 @@ app.use("/api/orders", orderRoute)
 app.use("/api/payment", paymentRoute)
 app.use("/api/history", historyRoute)
 
-server.listen(process.env.PORT || 5000, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Backend server is running! ${process.env.PORT}`)
 })
