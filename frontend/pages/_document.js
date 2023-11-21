@@ -11,7 +11,7 @@ export default function Document() {
           content="https://ecommerce-app.agustin-ribotta.xyz/"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Inicio" />
+        <meta property="og:title" content="Ecommerce" />
         <meta property="og:description" content="Busca lo que queres" />
         <meta property="og:image" content="" />
 
@@ -24,7 +24,7 @@ export default function Document() {
           property="twitter:url"
           content="https://ecommerce-app.agustin-ribotta.xyz/"
         />
-        <meta name="twitter:title" content="Inicio" />
+        <meta name="twitter:title" content="Ecommerce" />
         <meta name="twitter:description" content="Busca lo que queres" />
         <meta name="twitter:image" content="" />
       </Head>
