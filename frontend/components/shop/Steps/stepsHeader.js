@@ -1,56 +1,27 @@
-import { useRouter } from "next/router"
-
 export const StepsHeader = ({ title, num, act, value }) => {
-  const router = useRouter()
-  const pathname = router.pathname
+  const style = value <= act ? "text-blue-500" : "text-gray-300";
+  const borderStyle = value <= act ? "border-blue-500" : "border-gray-300";
+
+  const barStyle = {
+    step1: "w-[5%] bg-blue-500",
+    step2: "w-[50%] bg-blue-500",
+    step3: "w-[100%] bg-blue-500",
+  };
 
   return (
     <>
-      <div className="relative flex flex-col items-center">
+      <div className="flex flex-col items-center mr-2">
         <div
-          className={`flex items-center justify-center z-50 border-2 ${
-            value <= act || pathname === "/success" ? "border-blue-500" : "border-gray-300"
-          } rounded-full h-10 w-10  bg-white`}
+          className={`${borderStyle} flex items-center justify-center z-50 border-2 rounded-full h-10 w-10  bg-white`}
         >
-          <p
-            className={`${
-              value <= act || pathname === "/success"
-                ? "text-blue-500"
-                : "text-gray-300"
-            }`}
-          >
-            {num}
-          </p>
+          <p className={style}>{num}</p>
         </div>
-        <p
-          className={`${
-            value <= act || pathname === "/success"
-              ? "text-blue-500"
-              : "text-gray-300"
-          }`}
-        >
-          {title}
-        </p>
+        <p className={style}>{title}</p>
+      </div>
 
-        {value === "step2" && (
-          <>
-            <div
-              className={`${
-                act === "step3" || pathname === "/success"
-                  ? "border-blue-500"
-                  : "border-gray-300"
-              } absolute top-5 left-5 w-[20rem] border-b-2`}
-            ></div>
-            <div
-              className={`${
-                act === "step2" || pathname === "/success"
-                  ? "border-blue-500"
-                  : "border-gray-300"
-              } absolute top-5 right-5 w-[20rem] border-b-2`}
-            ></div>
-          </>
-        )}
+      <div className="block absolute top-5 w-full h-[2px] bg-gray-300">
+        <div className={`${barStyle[act]} h-full`}></div>
       </div>
     </>
-  )
-}
+  );
+};
