@@ -19,8 +19,8 @@ router.post(
       items: [],
       back_urls: {
         success: `${process.env.CORS_ORIGIN}/success`,
-        failure: `${process.env.CORS_ORIGIN}/success`,
-        pending: `${process.env.CORS_ORIGIN}/success`,
+        failure: `${process.env.CORS_ORIGIN}/failed`,
+        pending: `${process.env.CORS_ORIGIN}/pending`,
       },
       auto_return: "approved",
     };
@@ -32,6 +32,7 @@ router.post(
     });
 
     const response = await mercadopago.preferences.create(preference);
+    console.log({ response });
     const preferenceId = response.body.id;
 
     res.status(200).json(preferenceId);
