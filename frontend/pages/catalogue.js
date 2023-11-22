@@ -1,34 +1,34 @@
-import React, { useMemo, useEffect, useState } from "react"
-import Fuse from "fuse.js"
-import axios from "axios"
+import React, { useMemo, useEffect, useState } from "react";
+import Fuse from "fuse.js";
+import axios from "axios";
 
-import { CatalogueNavbar } from "components/shop/CatalogueNavbar"
-import Layout from "components/shop/Layout"
-import { API_URL } from "utils/urls"
-import { ProductsItems } from "components/shop/ProductsItems"
-import useSWR from "swr"
+import { CatalogueNavbar } from "components/CatalogueNavbar";
+import Layout from "components/Layout";
+import { API_URL } from "utils/urls";
+import { ProductsItems } from "components/ProductsItems";
+import useSWR from "swr";
 
 export default function Catalogue() {
-  const [data, setData] = useState([])
-  const [dataFiltered, setDataFiltered] = useState([])
-  const [sort, setSort] = useState()
-  const [color, setColor] = useState()
-  const [category, setCategory] = useState(null)
-  const [size, setSize] = useState(null)
+  const [data, setData] = useState([]);
+  const [dataFiltered, setDataFiltered] = useState([]);
+  const [sort, setSort] = useState();
+  const [color, setColor] = useState();
+  const [category, setCategory] = useState(null);
+  const [size, setSize] = useState(null);
 
-  const { data:products } = useSWR(`${API_URL}/products`)
+  const { data: products } = useSWR(`${API_URL}/products`);
 
   const removeFilters = async () => {
-    setSort(null)
-    setColor(null)
-    setCategory(null)
-    setSize(null)
-    setDataFiltered([])
-  }
+    setSort(null);
+    setColor(null);
+    setCategory(null);
+    setSize(null);
+    setDataFiltered([]);
+  };
 
   useEffect(() => {
-    setData(products?.data?.data)
-  }, [products])
+    setData(products?.data?.data);
+  }, [products]);
 
   const fuse = new Fuse(data, {
     keys: ["color", "categories", "size"],
@@ -41,33 +41,33 @@ export default function Catalogue() {
     distance: 100,
     maxPatternLength: 32,
     minMatchCharLength: 1,
-  })
+  });
   useMemo(() => {
     if (sort === "asc") {
-      const result = data.sort((a, b) => (a.price < b.price ? 1 : -1))
-      setDataFiltered(result)
+      const result = data.sort((a, b) => (a.price < b.price ? 1 : -1));
+      setDataFiltered(result);
     }
     if (sort === "desc") {
-      const result = data.sort((a, b) => (a.price > b.price ? 1 : -1))
-      setDataFiltered(result)
+      const result = data.sort((a, b) => (a.price > b.price ? 1 : -1));
+      setDataFiltered(result);
     }
     if (category) {
-      const result = fuse.search(category)
-      setDataFiltered(result)
+      const result = fuse.search(category);
+      setDataFiltered(result);
     }
     if (color) {
-      const result = fuse.search(color)
-      setDataFiltered(result)
+      const result = fuse.search(color);
+      setDataFiltered(result);
     }
     if (size) {
-      const result = fuse.search(size)
-      setDataFiltered(result)
+      const result = fuse.search(size);
+      setDataFiltered(result);
     }
-  }, [sort, color, category, size])
+  }, [sort, color, category, size]);
 
   const toFilter = () => {
-    return dataFiltered.length === 0 ? data : dataFiltered
-  }
+    return dataFiltered.length === 0 ? data : dataFiltered;
+  };
 
   return (
     <Layout title="Catalogo">
@@ -102,7 +102,5 @@ export default function Catalogue() {
         </div>
       </section>
     </Layout>
-  )
+  );
 }
-
-

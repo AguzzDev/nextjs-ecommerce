@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { LazyMotion, m, domAnimation } from "framer-motion";
 
-import Navbar from "components/shop/Navbar";
+import Navbar from "components/Navbar";
 
 const variants = {
   initial: { opacity: 0 },

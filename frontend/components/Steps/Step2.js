@@ -1,4 +1,4 @@
-import { ItemsSlider } from "components/shop/ItemsSlider";
+import { ItemsSlider } from "components/ItemsSlider";
 import UserContext from "context/User/UserContext";
 import { parseCookies } from "nookies";
 import { useContext, useEffect } from "react";

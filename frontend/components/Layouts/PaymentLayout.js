@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import Layout from "components/shop/Layout";
+import Layout from "components/Layout";
 import { StepsHeader } from "../Steps/stepsHeader";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";

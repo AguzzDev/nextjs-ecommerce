@@ -7,14 +7,14 @@ import axios from "axios"
 
 import { colorType, priceFormat, descFormat } from "utils/format"
 import { addToCart } from "store/actions/cart"
-import Layout from "components/shop/Layout"
+import Layout from "components/Layout"
 import ModalContext from "context/Modal/ModalContext"
 import UserContext from "context/User/UserContext"
 import { API_URL } from "utils/urls"
-import { DisclosureProducts } from "components/shop/Disclosure/DisclosureProducts"
-import { SliderDetails } from "components/shop/Slider/SliderDetails"
+import { DisclosureProducts } from "components/Disclosure/DisclosureProducts"
+import { SliderDetails } from "components/Slider/SliderDetails"
 import { setHistory } from "store/actions/history"
-import { Slider } from "components/shop/Slider/Slider"
+import { Slider } from "components/Slider/Slider"
 
 export default function Slug({ slug }) {
   const [actualSlide, setActualSlide] = useState(0)

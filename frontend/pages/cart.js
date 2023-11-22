@@ -1,13 +1,13 @@
-import Link from "next/link"
-import { useSelector } from "react-redux"
+import Link from "next/link";
+import { useSelector } from "react-redux";
 
-import Layout from "components/shop/Layout"
-import { priceFormat } from "utils/format"
-import { CartItems } from "components/shop/Modal/CartItems"
+import Layout from "components/Layout";
+import { priceFormat } from "utils/format";
+import { CartItems } from "components/Modal/CartItems";
 
 const Cart = () => {
-  const cart = useSelector((state) => state.cart)
-  const total = cart.total + 0.21 * cart.total
+  const cart = useSelector((state) => state.cart);
+  const total = cart.total + 0.21 * cart.total;
 
   return (
     <Layout title={`Carrito (${cart.products.length} artículos)`}>
@@ -49,7 +49,7 @@ const Cart = () => {
         </div>
       </section>
     </Layout>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

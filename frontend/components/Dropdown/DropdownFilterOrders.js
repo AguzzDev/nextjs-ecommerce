@@ -1,13 +1,13 @@
-import React from "react"
-import { Menu } from "@headlessui/react"
+import React from "react";
+import { Menu } from "@headlessui/react";
 import {
   AdjustmentsIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-} from "@heroicons/react/outline"
+} from "@heroicons/react/outline";
 
-import { titleFilter } from "utils/format"
-import { IconXS } from "components/shop/Icons"
+import { titleFilter } from "utils/format";
+import { IconXS } from "components/Icons";
 
 export const DropdownFilterOrders = ({
   filterValue,
@@ -66,5 +66,5 @@ export const DropdownFilterOrders = ({
         </div>
       </Menu.Items>
     </Menu>
-  )
-}
+  );
+};

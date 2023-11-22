@@ -1,27 +1,27 @@
-import { FieldAddress } from "components/shop/Fields/FieldAddress"
-import UserContext from "context/User/UserContext"
-import { Form, Formik } from "formik"
-import { useContext, useState } from "react"
-import { useSelector } from "react-redux"
-import { validateAddress } from "utils/validate"
-import { StepsHeader } from "./stepsHeader"
-import { StepAside } from "./StepAside"
+import { FieldAddress } from "components/Fields/FieldAddress";
+import UserContext from "context/User/UserContext";
+import { Form, Formik } from "formik";
+import { useContext, useState } from "react";
+import { useSelector } from "react-redux";
+import { validateAddress } from "utils/validate";
+import { StepsHeader } from "./stepsHeader";
+import { StepAside } from "./StepAside";
 
 export function Step1({ navigation, stepId, setFormData, formData }) {
-  const [userInfo, setUserInfo] = useState(1)
-  const [sending, setSending] = useState(0)
-  const { user } = useContext(UserContext)
-  const cart = useSelector((state) => state.cart)
+  const [userInfo, setUserInfo] = useState(1);
+  const [sending, setSending] = useState(0);
+  const { user } = useContext(UserContext);
+  const cart = useSelector((state) => state.cart);
 
   const toogleButton = (e, n) => {
-    e.preventDefault()
-    setUserInfo(n)
+    e.preventDefault();
+    setUserInfo(n);
     if (n === 1) {
       setFormData({
         sending: false,
-      })
+      });
 
-      setSending(0)
+      setSending(0);
     } else if (n === 2) {
       setFormData({
         address: user?.address,
@@ -30,10 +30,10 @@ export function Step1({ navigation, stepId, setFormData, formData }) {
         province: user?.province,
         postal_code: user?.postal_code,
         sending: true,
-      })
-      setSending(600)
+      });
+      setSending(600);
     }
-  }
+  };
 
   return (
     <>
@@ -131,8 +131,8 @@ export function Step1({ navigation, stepId, setFormData, formData }) {
                         province: values?.province,
                         postal_code: values?.postal_code,
                         sending: true,
-                      })
-                      setSending(600)
+                      });
+                      setSending(600);
                     }}
                   >
                     {({ handleChange, values, errors }) => (
@@ -167,5 +167,5 @@ export function Step1({ navigation, stepId, setFormData, formData }) {
         />
       </section>
     </>
-  )
+  );
 }

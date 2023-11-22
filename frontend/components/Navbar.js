@@ -1,18 +1,18 @@
-import Link from "next/link"
-import { useSelector } from "react-redux"
-import { HeartIcon } from "@heroicons/react/outline"
-import { useContext } from "react"
+import Link from "next/link";
+import { useSelector } from "react-redux";
+import { HeartIcon } from "@heroicons/react/outline";
+import { useContext } from "react";
 
-import { IconXS } from "components/shop/Icons"
-import { CartModal } from "components/shop/Modal/CartModal"
-import { AuthModal } from "components/shop/Modal/AuthModal"
-import UserContext from "context/User/UserContext"
-import { DropdownUser } from "./Dropdown/DropdownUser"
-import { SearchInput } from "./SearchInput"
+import { IconXS } from "components/Icons";
+import { CartModal } from "components/Modal/CartModal";
+import { AuthModal } from "components/Modal/AuthModal";
+import UserContext from "context/User/UserContext";
+import { DropdownUser } from "./Dropdown/DropdownUser";
+import { SearchInput } from "./SearchInput";
 
 export default function Navbar() {
-  const { user } = useContext(UserContext)
-  const { favourite } = useSelector((state) => state.favourite)
+  const { user } = useContext(UserContext);
+  const { favourite } = useSelector((state) => state.favourite);
 
   return (
     <section
@@ -58,5 +58,5 @@ export default function Navbar() {
         </div>
       </div>
     </section>
-  )
+  );
 }

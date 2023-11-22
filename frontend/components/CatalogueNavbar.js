@@ -1,5 +1,5 @@
-import filters from "data/Filter"
-import { DisclosureCategory } from "components/shop/Disclosure/DisclosureCategory"
+import filters from "data/Filter";
+import { DisclosureCategory } from "components/Disclosure/DisclosureCategory";
 
 export const CatalogueNavbar = ({
   category,
@@ -52,5 +52,5 @@ export const CatalogueNavbar = ({
         </button>
       </section>
     </>
-  )
-}
+  );
+};

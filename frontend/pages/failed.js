@@ -1,4 +1,4 @@
-import PaymentLayout from "components/shop/Layouts/PaymentLayout";
+import PaymentLayout from "components/Layouts/PaymentLayout";
 
 export const Failed = () => {
   return <PaymentLayout title="Fallo" step="step2" />;

@@ -1,5 +1,5 @@
-import Layout from "components/shop/Layout";
-import { AllSteps } from "components/shop/Steps/allSteps";
+import Layout from "components/Layout";
+import { AllSteps } from "components/Steps/allSteps";
 
 const Checkout = () => {
   return (

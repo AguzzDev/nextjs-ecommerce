@@ -1,24 +1,24 @@
-import { FieldBox } from "components/shop/Fields/FieldBox"
-import Layout from "components/shop/Layout"
-import { Form, Formik } from "formik"
-import { useContext, useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { changePassword } from "store/actions/auth"
-import UserContext from "context/User/UserContext"
-import { useRouter } from "next/router"
+import { FieldBox } from "components/Fields/FieldBox";
+import Layout from "components/Layout";
+import { Form, Formik } from "formik";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { changePassword } from "store/actions/auth";
+import UserContext from "context/User/UserContext";
+import { useRouter } from "next/router";
 
 const changePasswordC = ({ param }) => {
-  const [screen, setScreen] = useState(false)
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const [screen, setScreen] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const { user } = useContext(UserContext)
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (user) {
-      router.push("/")
+      router.push("/");
     }
-  }, [user])
+  }, [user]);
 
   return (
     <Layout
@@ -33,8 +33,8 @@ const changePasswordC = ({ param }) => {
             <Formik
               initialValues={{ password: "" }}
               onSubmit={async (values) => {
-                setScreen(true)
-                dispatch(changePassword({ param, values }))
+                setScreen(true);
+                dispatch(changePassword({ param, values }));
               }}
             >
               {({ handleChange, values, errors }) => (
@@ -63,17 +63,17 @@ const changePasswordC = ({ param }) => {
         )}
       </section>
     </Layout>
-  )
-}
+  );
+};
 
-export default changePasswordC
+export default changePasswordC;
 
 export const getServerSideProps = ({ params }) => {
-  const param = params.token.substring(22)
+  const param = params.token.substring(22);
 
   return {
     props: {
       param,
     },
-  }
-}
+  };
+};

@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux"
-import { useRouter } from "next/router"
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
-import Layout from "components/shop/Layout"
-import { ProductsItems } from "components/shop/ProductsItems"
+import Layout from "components/Layout";
+import { ProductsItems } from "components/ProductsItems";
 
 export default function Favourite() {
-  const { favourite } = useSelector((state) => state.favourite)
-  const router = useRouter()
+  const { favourite } = useSelector((state) => state.favourite);
+  const router = useRouter();
 
   return (
     <Layout title="Tus favoritos">
@@ -25,11 +25,11 @@ export default function Favourite() {
         ) : (
           <div className="grid w-full grid-cols-3 gap-5 sm:grid-cols-4 lg:grid-cols-5 place-items-start">
             {favourite.map((product, i) => (
-              <ProductsItems product={product} i={i} id="favourites"/>
+              <ProductsItems product={product} i={i} id="favourites" />
             ))}
           </div>
         )}
       </section>
     </Layout>
-  )
+  );
 }

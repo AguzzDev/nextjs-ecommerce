@@ -1,24 +1,24 @@
-import { Charts } from "components/dashboard/Chart/Charts"
-import { TripleTable } from "components/dashboard/Info/TripleTable"
-import { SmallTable } from "components/dashboard/Info/SmallTable"
-import Layout from "components/dashboard/Layout/Layout"
-import Layout2 from "components/shop/Layout"
-import userChart from "data/Chart"
-import { LargeTable } from "components/dashboard/Info/LargeTable"
-import { useContext } from "react"
-import UserContext from "context/User/UserContext"
-import { useSelector } from "react-redux"
-import { getAllOrders } from "store/actions/order"
-import { useDispatchActions } from "hooks/useDispatchActions"
-import { getAllUsers } from "store/actions/users"
+import { Charts } from "components/dashboard/Chart/Charts";
+import { TripleTable } from "components/dashboard/Info/TripleTable";
+import { SmallTable } from "components/dashboard/Info/SmallTable";
+import Layout from "components/dashboard/Layout/Layout";
+import Layout2 from "components/Layout";
+import userChart from "data/Chart";
+import { LargeTable } from "components/dashboard/Info/LargeTable";
+import { useContext } from "react";
+import UserContext from "context/User/UserContext";
+import { useSelector } from "react-redux";
+import { getAllOrders } from "store/actions/order";
+import { useDispatchActions } from "hooks/useDispatchActions";
+import { getAllUsers } from "store/actions/users";
 
 export default function Home() {
-  const { user } = useContext(UserContext)
-  const { allOrders } = useSelector((state) => state.order)
-  const { users } = useSelector((state) => state.users)
+  const { user } = useContext(UserContext);
+  const { allOrders } = useSelector((state) => state.order);
+  const { users } = useSelector((state) => state.users);
 
-  const { loading } = useDispatchActions(getAllOrders())
-  const { loading: loading2 } = useDispatchActions(getAllUsers())
+  const { loading } = useDispatchActions(getAllOrders());
+  const { loading: loading2 } = useDispatchActions(getAllUsers());
 
   return (
     <>
@@ -52,5 +52,5 @@ export default function Home() {
         </Layout>
       )}
     </>
-  )
+  );
 }

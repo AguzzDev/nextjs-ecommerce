@@ -1,31 +1,31 @@
-import { Dialog, Transition } from "@headlessui/react"
-import { UserIcon, XIcon } from "@heroicons/react/outline"
-import { useState, Fragment, useContext } from "react"
-import { Formik, Form } from "formik"
-import { useDispatch } from "react-redux"
-import { useRef } from "react"
-import Link from "next/link"
+import { Dialog, Transition } from "@headlessui/react";
+import { UserIcon, XIcon } from "@heroicons/react/outline";
+import { useState, Fragment, useContext } from "react";
+import { Formik, Form } from "formik";
+import { useDispatch } from "react-redux";
+import { useRef } from "react";
+import Link from "next/link";
 
-import ModalContext from "context/Modal/ModalContext"
-import { userRegister, userLogin } from "store/actions/auth"
-import { IconXS } from "components/shop/Icons"
-import { useMouseLeave } from "hooks/useMouseLeave"
-import { FieldBox } from "components/shop/Fields/FieldBox"
-import { validateLogin, validateRegister } from "utils/validate"
-import { FieldAddress } from "components/shop/Fields/FieldAddress"
+import ModalContext from "context/Modal/ModalContext";
+import { userRegister, userLogin } from "store/actions/auth";
+import { IconXS } from "components/Icons";
+import { useMouseLeave } from "hooks/useMouseLeave";
+import { FieldBox } from "components/Fields/FieldBox";
+import { validateLogin, validateRegister } from "utils/validate";
+import { FieldAddress } from "components/Fields/FieldAddress";
 
 export const AuthModal = () => {
-  const { isOpen, setIsOpen, openModal, closeModal } = useContext(ModalContext)
-  const [screen, setScreen] = useState(false)
+  const { isOpen, setIsOpen, openModal, closeModal } = useContext(ModalContext);
+  const [screen, setScreen] = useState(false);
 
-  const modalRef = useRef(null)
+  const modalRef = useRef(null);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const toggleScreen = () => {
-    setScreen(!screen)
-  }
-  useMouseLeave(modalRef, setIsOpen)
+    setScreen(!screen);
+  };
+  useMouseLeave(modalRef, setIsOpen);
 
   return (
     <>
@@ -83,7 +83,7 @@ export const AuthModal = () => {
                       }}
                       validationSchema={validateLogin}
                       onSubmit={async (values) => {
-                        await dispatch(userLogin(values, setIsOpen))
+                        await dispatch(userLogin(values, setIsOpen));
                       }}
                     >
                       {({ handleChange, values, errors }) => (
@@ -211,5 +211,5 @@ export const AuthModal = () => {
         </Dialog>
       </Transition.Root>
     </>
-  )
-}
+  );
+};

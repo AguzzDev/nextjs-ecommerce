@@ -1,51 +1,51 @@
-import { useState } from "react"
-import { useSelector } from "react-redux"
-import moment from "moment"
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
-import Layout from "components/shop/Layout"
-import { FilterOrders } from "components/shop/FilterOrders"
-import { DropdownFilterOrders } from "components/shop/Dropdown/DropdownFilterOrders"
+import Layout from "components/Layout";
+import { FilterOrders } from "components/FilterOrders";
+import { DropdownFilterOrders } from "components/Dropdown/DropdownFilterOrders";
 
 const myPurchases = () => {
-  const [filterValue, setFilterValue] = useState(0)
-  const [active, setActive] = useState(false)
+  const [filterValue, setFilterValue] = useState(0);
+  const [active, setActive] = useState(false);
 
   const toogleActive = () => {
-    setActive(!active)
-  }
+    setActive(!active);
+  };
 
-  const { orders } = useSelector((state) => state.order)
+  const { orders } = useSelector((state) => state.order);
 
   const filterOrders = () => {
-    let items = [...orders]
-    const restDate = moment().subtract(filterValue, "month").calendar()
-    const numberDateRest = new Date(restDate)
+    let items = [...orders];
+    const restDate = moment().subtract(filterValue, "month").calendar();
+    const numberDateRest = new Date(restDate);
 
     if (filterValue === 1) {
-      return items.filter((a) => new Date(a.createdAt) > numberDateRest)
+      return items.filter((a) => new Date(a.createdAt) > numberDateRest);
     } else if (filterValue === 3) {
-      const six = moment().subtract(6, "months").calendar()
-      const sixRest = new Date(six)
+      const six = moment().subtract(6, "months").calendar();
+      const sixRest = new Date(six);
       return items.filter(
         (a) =>
           new Date(a.createdAt) < numberDateRest &&
           new Date(a.createdAt) > sixRest
-      )
+      );
     } else if (filterValue === 6) {
-      const year = moment().subtract(12, "months").calendar()
-      const yearRest = new Date(year)
+      const year = moment().subtract(12, "months").calendar();
+      const yearRest = new Date(year);
 
       return items.filter(
         (a) =>
           new Date(a.createdAt) < numberDateRest &&
           new Date(a.createdAt) > yearRest
-      )
+      );
     } else if (filterValue === 12) {
-      return items.filter((a) => new Date(a.createdAt) < numberDateRest)
+      return items.filter((a) => new Date(a.createdAt) < numberDateRest);
     } else {
-      return items
+      return items;
     }
-  }
+  };
 
   return (
     <Layout title="Mis compras">
@@ -74,7 +74,7 @@ const myPurchases = () => {
         </div>
       </section>
     </Layout>
-  )
-}
+  );
+};
 
-export default myPurchases
+export default myPurchases;

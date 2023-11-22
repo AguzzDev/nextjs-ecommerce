@@ -1,22 +1,22 @@
-import React, { useState } from "react"
-import { motion } from "framer-motion"
-import { priceFormat, dateMonthFormat } from "utils/format"
-import { Disclosure } from "@headlessui/react"
-import { IconsXs } from "components/dashboard/Icons"
-import { ChevronDownIcon } from "@heroicons/react/outline"
-import { useMediaQuery } from "hooks/useMediaQuery"
-import { Slider } from "components/shop/Slider/Slider"
-import { DisclosureOrders } from "./Disclosure/DisclosureOrders"
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+
+import { priceFormat, dateMonthFormat } from "utils/format";
+import { IconXS } from "components/Icons";
+import { ChevronDownIcon } from "@heroicons/react/outline";
+import { useMediaQuery } from "hooks/useMediaQuery";
+import { Slider } from "components/Slider/Slider";
+import { DisclosureOrders } from "./Disclosure/DisclosureOrders";
 
 export const FilterOrders = ({ param, i }) => {
-  const { createdAt, products, status, userInfo, total } = param
+  const { createdAt, products, status, userInfo, total } = param;
 
-  const isSmall = useMediaQuery("(max-width: 500px)")
-  const [open, setOpen] = useState(false)
+  const isSmall = useMediaQuery("(max-width: 500px)");
+  const [open, setOpen] = useState(false);
 
   const toggleOpen = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
 
   const variants = {
     closed: { height: 0, background: "white" },
@@ -25,7 +25,7 @@ export const FilterOrders = ({ param, i }) => {
       : { height: 300, background: "white" },
     closedItems: { opacity: 0, height: "100%" },
     openItems: { opacity: 1, height: "100%" },
-  }
+  };
 
   return (
     <>
@@ -36,9 +36,9 @@ export const FilterOrders = ({ param, i }) => {
           <button onClick={toggleOpen} className="z-30 flex space-x-3">
             <p>Ver detalles</p>
             {open ? (
-              <IconsXs Icon={ChevronDownIcon} props="transform rotate-180" />
+              <IconXS Icon={ChevronDownIcon} props="transform rotate-180" />
             ) : (
-              <IconsXs Icon={ChevronDownIcon} />
+              <IconXS Icon={ChevronDownIcon} />
             )}
           </button>
         </div>
@@ -64,11 +64,11 @@ export const FilterOrders = ({ param, i }) => {
               <Slider products={products} />
             </div>
             <div className="w-2/6">
-             <DisclosureOrders params={{status, userInfo, total}}/>
+              <DisclosureOrders params={{ status, userInfo, total }} />
             </div>
           </motion.div>
         </motion.div>
       </div>
     </>
-  )
-}
+  );
+};

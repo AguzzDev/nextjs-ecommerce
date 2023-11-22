@@ -1,16 +1,16 @@
-import React, { Fragment, useState } from "react"
-import { Dialog, Transition } from "@headlessui/react"
-import { ShoppingCartIcon, XIcon } from "@heroicons/react/outline"
-import { useSelector } from "react-redux"
-import Link from "next/link"
+import React, { Fragment, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { ShoppingCartIcon, XIcon } from "@heroicons/react/outline";
+import { useSelector } from "react-redux";
+import Link from "next/link";
 
-import { IconXS } from "components/shop/Icons"
-import { priceFormat } from "utils/format"
-import { CartItems } from "./CartItems"
+import { IconXS } from "components/Icons";
+import { priceFormat } from "utils/format";
+import { CartItems } from "./CartItems";
 
 export const CartModal = () => {
-  let [isOpen, setIsOpen] = useState(false)
-  const cart = useSelector((state) => state.cart)
+  let [isOpen, setIsOpen] = useState(false);
+  const cart = useSelector((state) => state.cart);
 
   return (
     <>
@@ -86,5 +86,5 @@ export const CartModal = () => {
         </Dialog>
       </Transition.Root>
     </>
-  )
-}
+  );
+};

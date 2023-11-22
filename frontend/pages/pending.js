@@ -1,4 +1,4 @@
-import PaymentLayout from "components/shop/Layouts/PaymentLayout";
+import PaymentLayout from "components/Layouts/PaymentLayout";
 
 export const Pending = () => {
   return <PaymentLayout title="Pendiente" step="step2" />;
