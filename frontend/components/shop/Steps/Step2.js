@@ -1,27 +1,27 @@
-import { ItemsSlider } from "components/shop/ItemsSlider"
-import UserContext from "context/User/UserContext"
-import { parseCookies } from "nookies"
-import { useContext, useEffect } from "react"
-import { useSelector } from "react-redux"
-import { useMercadopago } from "react-sdk-mercadopago/lib"
-import { StepAside } from "./StepAside"
-import { StepsHeader } from "./stepsHeader"
+import { ItemsSlider } from "components/shop/ItemsSlider";
+import UserContext from "context/User/UserContext";
+import { parseCookies } from "nookies";
+import { useContext, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useMercadopago } from "react-sdk-mercadopago/lib";
+import { StepAside } from "./StepAside";
+import { StepsHeader } from "./stepsHeader";
 
 export function Step2({ stepId, formData }) {
-  const cart = useSelector((state) => state.cart)
-  const { sendingPrice, iva } = formData
-  const total = cart.total + iva + sendingPrice
-  const { userId } = useContext(UserContext)
+  const cart = useSelector((state) => state.cart);
+  const { sendingPrice, iva } = formData;
+  const total = cart.total + iva + sendingPrice;
+  const { userId } = useContext(UserContext);
 
-  const { pId } = parseCookies()
-  const { sending } = formData
+  const { pId } = parseCookies();
+  const { sending } = formData;
 
   const mercadopago = useMercadopago.v2(
     "TEST-f657524d-5964-4b26-a159-1e827488d9da",
     {
       locale: "es-AR",
     }
-  )
+  );
 
   useEffect(() => {
     if (mercadopago) {
@@ -32,9 +32,10 @@ export function Step2({ stepId, formData }) {
         render: {
           container: ".mercadopago",
         },
-      })
+      });
     }
-  }, [mercadopago])
+  }, [mercadopago]);
+
   return (
     <>
       <section className="flex my-8 space-x-8">
@@ -96,5 +97,5 @@ export function Step2({ stepId, formData }) {
         />
       </section>
     </>
-  )
+  );
 }
