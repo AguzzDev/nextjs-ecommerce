@@ -1,6 +1,10 @@
 import { Field, FieldAttributes, useField } from "formik";
 
-export const FieldBox: React.FC<FieldAttributes<any>> = (props) => {
+interface Props extends FieldAttributes<any> {
+  placeholder?: string;
+}
+
+export const FieldBox: React.FC<Props> = (props) => {
   const [field, meta] = useField(props.name);
 
   return (
