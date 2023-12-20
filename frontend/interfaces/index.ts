@@ -329,6 +329,8 @@ export type ClickEventType = MouseEvent<HTMLButtonElement>;
 
 //forms
 export interface SelectBoxInterface extends FieldAttributes<any> {
+  name: string;
+  placeholder?: string;
   options: {
     id: number;
     value: string;

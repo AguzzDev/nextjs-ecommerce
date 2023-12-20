@@ -41,18 +41,14 @@ const forgetPasswordC = () => {
                 dispatch(forgetPassword(values));
               }}
             >
-              {({ handleChange, values, errors }) => (
+              {() => (
                 <Form>
                   <FieldBox
-                    handleChange={handleChange}
-                    inputType="email"
+                    name="email"
                     type="email"
                     placeholder="Email"
-                    value={values.email}
                   />
-                  {errors.email && (
-                    <div className="text-sm">{errors.email}</div>
-                  )}
+               
                   <button className="button" type="submit">
                     Enviar
                   </button>

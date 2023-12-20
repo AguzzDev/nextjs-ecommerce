@@ -40,18 +40,14 @@ const ChangePassword = ({ param }: { param: string }) => {
                 dispatch(changePassword({ param, values }));
               }}
             >
-              {({ handleChange, values, errors }) => (
+              {() => (
                 <Form>
                   <FieldBox
-                    handleChange={handleChange}
-                    inputType="password"
+                    name="password"
                     type="password"
                     placeholder="Contraseña"
-                    value={values.password}
                   />
-                  {errors.password && (
-                    <div className="text-sm">{errors.password}</div>
-                  )}
+
                   <button className="button" type="submit">
                     Enviar
                   </button>

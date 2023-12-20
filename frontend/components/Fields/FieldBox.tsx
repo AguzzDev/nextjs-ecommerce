@@ -1,6 +1,7 @@
 import { Field, FieldAttributes, useField } from "formik";
 
 interface Props extends FieldAttributes<any> {
+  name: string;
   placeholder?: string;
 }
 
