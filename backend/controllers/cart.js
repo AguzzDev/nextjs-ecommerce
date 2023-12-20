@@ -1,75 +1,108 @@
-import { asyncWrapper } from "../middleware/asyncWrapper.js"
-import User from "../models/User.js"
+import { asyncWrapper } from "../middleware/asyncWrapper.js";
+import Product from "../models/Product.js";
+import User from "../models/User.js";
+import { findUser } from "../utils/findUser.js";
+import { userCart } from "../utils/userCart.js";
 
 export const getAllCart = asyncWrapper(async (req, res) => {
-  const data = await User.find()
-  res.status(200).json(data)
-})
+  const data = await User.find();
+
+  res.status(200).json(data);
+});
 
 export const getCart = asyncWrapper(async (req, res) => {
-  const data = await User.findById(req.user.id)
+  const cart = await userCart(req.user.id);
 
-  res.status(200).json(data.cart)
-})
+  res.status(200).json(cart);
+});
 
 export const createCart = asyncWrapper(async (req, res) => {
-  const body = req.body.product
+  const body = req.body.product;
 
-  User.findOne({ _id: req.user.id }, (_, userInfo) => {
-    let duplicate = false
+  try {
+    const product = await Product.findById(req.body.id);
 
-    userInfo.cart.forEach((item) => {
-      if (item.productId == body.product._id) {
-        duplicate = true
-      }
-    })
+    if (product.quantity < body.quantity) {
+      return res.status(400).json("Sin Stock");
+    }
 
-    if (duplicate) {
-      return res.status(200).json("Ya en el carrito")
-    } else {
-      User.findOneAndUpdate(
-        { _id: req.user.id },
-        {
-          $push: {
-            cart: {
-              productId: body.product._id,
-              title: body.product.title,
-              img: body.product.img,
-              quantity: body.quantity,
-              color: body.color,
-              size: body.size,
-              total: body.product.price * body.quantity,
-            },
+    const priceTotal = product.price * body.quantity;
+
+    await Product.findByIdAndUpdate(
+      req.body.id,
+      {
+        $inc: { quantity: -body.quantity },
+      },
+      { new: true }
+    );
+
+    await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $push: {
+          "cart.products": {
+            id: req.body.id,
+            quantity: body.quantity,
+            price: priceTotal,
+            size: [body.size],
+            color: [body.color],
           },
         },
-        { new: true },
-        (err, userInfo) => {
-          if (err) return res.json(err)
-          res.status(200).json(userInfo.cart)
-        }
-      )
-    }
-  })
-})
+        $inc: {
+          "cart.total": priceTotal,
+        },
+      },
+      { new: true }
+    );
 
-export const deleteItem = asyncWrapper(async (req, res) => {
-  const { cart } = await User.findOne({ _id: req.user.id })
-  const cartFilter = cart.filter((pId) => pId.productId !== req.body.productId)
+    const resp = await userCart(req.user.id);
+    res.status(200).json(resp);
+  } catch (error) {
+    res.status(500);
+  }
+});
 
-  await User.findOneAndUpdate(
-    { _id: req.user.id },
-    { cart: cartFilter },
+export const deleteItemCart = asyncWrapper(async (req, res) => {
+  const { cart } = await findUser(req.user.id);
+
+  const cartFilter = cart.products.filter((p) => p._id == req.body.id)[0];
+
+  if (!cartFilter) {
+    return res.status(400).send("Producto ya eliminado");
+  }
+
+  await Product.findByIdAndUpdate(
+    cartFilter.id,
+    {
+      $inc: {
+        quantity: cartFilter.quantity,
+      },
+    },
     { new: true }
-  )
-  res.status(200).json(req.body.productId)
-})
+  );
+
+  await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      $pull: {
+        "cart.products": { _id: req.body.id },
+      },
+      $inc: {
+        "cart.total": -cartFilter.price,
+      },
+    },
+    { new: true }
+  );
+
+  res.status(200).json(cartFilter);
+});
 
 export const deleteCart = asyncWrapper(async (req, res) => {
   const data = await User.findOneAndUpdate(
     { _id: req.user.id },
-    { cart: [] },
+    { cart: { products: [], total: 0 } },
     { new: true }
-  )
+  );
 
-  res.status(200).json(data)
-})
+  res.status(200).json(data);
+});

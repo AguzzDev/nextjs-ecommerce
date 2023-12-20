@@ -1,7 +1,7 @@
-import mongoose from "mongoose"
-import slug from "mongoose-slug-generator"
+import mongoose from "mongoose";
+import slug from "mongoose-slug-generator";
 
-mongoose.plugin(slug)
+mongoose.plugin(slug);
 
 const ProductSchema = new mongoose.Schema(
   {
@@ -13,8 +13,9 @@ const ProductSchema = new mongoose.Schema(
     size: { type: Array },
     color: { type: Array },
     price: { type: Number },
+    quantity: { type: Number },
   },
   { timestamps: true }
-)
+);
 
-export default mongoose.model("Product", ProductSchema)
+export default mongoose.model("Product", ProductSchema);

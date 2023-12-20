@@ -50,63 +50,35 @@
 
 @layer components {
   * {
-    @apply p-0 box-border;
+    @apply m-0 p-0 box-border;
   }
-  .shop-body {
-    @apply overflow-hidden font-nike bg-[#F6F6F6];
+  body {
+    @apply overflow-x-hidden font-nike bg-[#F6F6F6];
+  }
+  h1{
+    @apply text-4xl md:text-5xl
+  }
+  h2{
+    @apply text-3xl md:text-4xl
+  }
+  h3{
+    @apply text-2xl md:text-3xl
+  }
+  h4{
+    @apply text-xl md:text-2xl
   }
   .shop-body input,
   .shop-body select {
     @apply outline-none;
   }
-  .shop-body h1 {
-    @apply text-xl md:text-3xl font-bold;
-  }
-  .shop-body h2 {
-    @apply text-lg md:text-2xl;
-  }
-  .shop-body input::placeholder {
+  input::placeholder {
     @apply text-gray-500;
   }
-  .mercadopago button {
-    @apply bg-transparent w-full p-0 m-0 font-bold py-1;
+  input{
+    @apply focus:outline-none bg-transparent px-2
   }
   .button {
     @apply px-5 py-3 mt-3 text-white bg-black rounded-md;
   }
-
-  .dashboard-body {
-    @apply bg-white dark:bg-gray-900 dark:bg-opacity-95 font-PT-Sans;
-  }
-  .dashboard-body input,
-  .dashboard-body textarea,
-  .dashboard-body select,
-  .dashboard-body option {
-    @apply dark:bg-gray-600 bg-gray-200 outline-none dark:text-gray-200 text-black;
-  }
-  .dashboard-body textarea {
-    resize: none;
-  }
-  .dashboard-body h1,
-  .dashboard-body h2,
-  .dashboard-body h3,
-  .dashboard-body h4,
-  .dashboard-body h5,
-  .dashboard-body p,
-  .dashboard-body label,
-  .dashboard-body select,
-  .dashboard-body option ,
-  .dashboard-body span,
-  .dashboard-body strong,
-  .dashboard-body a,
-  .dashboard-body tr,
-  .dashboard-body td {
-    @apply dark:text-white text-black;
-  }
-  .dashboard-body ::placeholder {
-    @apply dark:text-gray-200 text-black;
-  }
-  .darkmode {
-    @apply border dark:border-gray-800 border-gray-100 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-40;
-  }
+ 
 }

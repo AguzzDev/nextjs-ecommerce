@@ -1,17 +1,18 @@
+import { verifyToken, verifyTokenAndAdmin } from "../middleware/verifyToken.js";
 import {
-  verifyToken,
-  verifyTokenAndAdmin,
-} from "../middleware/verifyToken.js"
-import app from "express"
-import { createOrder, deleteOrder, getAllOrder, getUserOrder, updateOrder } from "../controllers/order.js";
+  deleteOrder,
+  getAllOrder,
+  getUserOrder,
+  updateOrder,
+} from "../controllers/order.js";
+import app from "express";
 
-const router = app.Router()
+const router = app.Router();
 
-router.post("/", verifyToken, createOrder);
 router.put("/:id", verifyTokenAndAdmin, updateOrder);
 router.delete("/:id", verifyTokenAndAdmin, deleteOrder);
 
-router.get("/", verifyTokenAndAdmin, getAllOrder);
-router.get("/:id", verifyToken, getUserOrder);
+router.get("/all", verifyTokenAndAdmin, getAllOrder);
+router.get("/", verifyToken, getUserOrder);
 
-export default router
+export default router;

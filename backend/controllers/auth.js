@@ -2,7 +2,6 @@ import User from "../models/User.js";
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
 import { asyncWrapper } from "../middleware/asyncWrapper.js";
-import { createCustomError } from "../utils/customErrors.js";
 import { sendMail } from "../utils/sendEmail.js";
 
 export const forgetPassword = asyncWrapper(async (req, res) => {
@@ -61,17 +60,29 @@ export const changePassword = asyncWrapper(async (req, res) => {
 });
 
 export const register = asyncWrapper(async (req, res) => {
+  const values = req.body;
+
   try {
+    if (values.password.length < 8) {
+      return res
+        .status(400)
+        .json("La contraseña debe tener 8 caracteres o mas");
+    }
+
     const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      address: req.body.address,
-      city: req.body.city,
-      country: req.body.country,
-      province: req.body.province,
-      postal_code: req.body.postal_code,
+      name: values.name,
+      surname: values.surname,
+      email: values.email,
+      location: {
+        address: values.address,
+        address_number: values.address_number,
+        city: values.city,
+        country: values.country,
+        province: values.province,
+        postal_code: values.postal_code,
+      },
       password: CryptoJS.AES.encrypt(
-        req.body.password,
+        values.password,
         process.env.JWT_SEC
       ).toString(),
     });
@@ -86,21 +97,33 @@ export const register = asyncWrapper(async (req, res) => {
       process.env.JWT_SEC,
       { expiresIn: "30d" }
     );
-    const { ...others } = savedUser._doc;
+
+    const {
+      createdAt,
+      updatedAt,
+      _id,
+      isAdmin,
+      password,
+      ...others
+    } = savedUser._doc;
+
     res.status(200).json({ ...others, accessToken });
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).send("El email ya fue usado");
+    }
     res.status(500).send(error);
   }
 });
 
-export const login = asyncWrapper(async (req, res, next) => {
+export const login = asyncWrapper(async (req, res) => {
   try {
     const user = await User.findOne({
       email: req.body.email,
     });
 
     if (!user) {
-      return next(createCustomError("El email no existe", 401));
+      return res.status(401).send("El email no existe");
     }
 
     const hashedPassword = CryptoJS.AES.decrypt(
@@ -113,7 +136,7 @@ export const login = asyncWrapper(async (req, res, next) => {
     const inputPassword = req.body.password;
 
     if (originalPassword != inputPassword) {
-      return next(createCustomError("La contraseña es incorrecta", 401));
+      return res.status(401).send("La contraseña es incorrecta");
     }
 
     const accessToken = jwt.sign(
@@ -125,7 +148,15 @@ export const login = asyncWrapper(async (req, res, next) => {
       { expiresIn: "30d" }
     );
 
-    const { ...others } = user._doc;
+    const {
+      createdAt,
+      updatedAt,
+      _id,
+      isAdmin,
+      password,
+      ...others
+    } = user._doc;
+
     res.status(200).json({ ...others, accessToken });
   } catch (error) {
     res.status(500).send(error);

@@ -1,70 +1,86 @@
-import { asyncWrapper } from "../middleware/asyncWrapper.js"
-import User from "../models/User.js"
+import { asyncWrapper } from "../middleware/asyncWrapper.js";
+import Product from "../models/Product.js";
+import User from "../models/User.js";
+import { findUser } from "../utils/findUser.js";
 
 export const getFavourite = asyncWrapper(async (req, res) => {
-  const data = await User.findById(req.user.id)
-  res.status(200).json(data.favourite)
-})
+  try {
+    const data = await User.findById(req.user.id).populate("favourite");
+
+    res.status(200).json(data.favourite);
+  } catch (error) {
+    res.status(500);
+  }
+});
 
 export const addFavourite = asyncWrapper(async (req, res) => {
-  const body = req.body
+  try {
+    const body = req.body;
 
-  User.findById(req.user.id, (_, userInfo) => {
-    let duplicate = false
+    const user = await User.findById(req.user.id);
 
-    userInfo.favourite.forEach((item) => {
-      if (item.productId == body._id) {
-        duplicate = true
-      }
-    })
+    const duplicates = user.favourite.find((item) => {
+      item.productId == body.id;
+    });
 
-    if (duplicate) {
-      return res.status(404).json({ message: "product already added" })
-    } else {
-      User.findByIdAndUpdate(
-        req.user.id,
-        {
-          $push: {
-            favourite: {
-              productId: body._id,
-              title: body.title,
-              img: body.img,
-              slug: body.slug,
-              price: body.price,
-              createdAt: Date.now(),
-            },
-          },
-        },
-        { new: true },
-        (err, userInfo) => {
-          if (err) return res.json(err)
-          res.status(200).json(userInfo.favourite)
-        }
-      )
+    if (duplicates) {
+      return res.status(404).json("Producto ya agregado");
     }
-  })
-})
+
+    const findProduct = await Product.findById(body.id);
+
+    await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $push: {
+          favourite: body.id,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json(findProduct);
+  } catch (error) {
+    res.status(500);
+  }
+});
 
 export const deleteItem = asyncWrapper(async (req, res) => {
-  const { favourite } = await User.findOne({ _id: req.user.id })
-  const favouriteFilter = favourite.filter(
-    (pId) => pId.productId !== req.body.productId
-  )
+  try {
+    const body = req.body;
+    const { favourite } = await findUser(req.user.id);
 
-  await User.findOneAndUpdate(
-    { _id: req.user.id },
-    { favourite: favouriteFilter },
-    { new: true }
-  )
-  res.status(200).json(req.body.productId)
-})
+    const favouriteFilter = favourite.filter((pId) => pId == body.id);
+
+    if (favouriteFilter.length === 0) {
+      return res.status(400).json("El producto no esta en favoritos");
+    }
+
+    await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $pull: {
+          favourite: body.id,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(req.body.id);
+  } catch (error) {
+    res.status(500);
+  }
+});
 
 export const deleteFavourite = asyncWrapper(async (req, res) => {
-  const data = await User.findOneAndUpdate(
-    { _id: req.params.id },
-    { favourite: [] },
-    { new: true }
-  )
+  try {
+    const data = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      { favourite: [] },
+      { new: true }
+    );
 
-  res.status(200).json(data)
-})
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500);
+  }
+});
