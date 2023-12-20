@@ -7,7 +7,7 @@ import { priceFormat } from "utils/format";
 import { useCartSelector } from "store/selectors/useCartSelector";
 
 export const CartItems: React.FC<{ modal?: boolean }> = ({ modal = false }) => {
-  const cart = useCartSelector();
+  const { products } = useCartSelector();
   const dispatch = useDispatch();
 
   const Info = ({
@@ -25,7 +25,7 @@ export const CartItems: React.FC<{ modal?: boolean }> = ({ modal = false }) => {
 
   return (
     <>
-      {cart?.products?.map(
+      {products.map(
         ({ title, img, quantity, color, size, price, cartId }, i) => (
           <>
             {modal ? (

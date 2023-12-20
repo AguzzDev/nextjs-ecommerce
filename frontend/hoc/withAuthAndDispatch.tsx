@@ -21,10 +21,9 @@ export const withAuthAndDispatch = (
       }
 
       if (isArray) {
-        let isGetProduct =
-          actions.name === "getProduct" || isArray
-            ? actions.filter(({ name }) => name === "getProduct")[0]
-            : false;
+        let isGetProduct = actions.filter(
+          ({ name }) => name === "getProduct"
+        )[0] as (arg: string) => any;
 
         if (!isGetProduct) {
           return actions.forEach((v) => dispatch(v()));
@@ -37,8 +36,8 @@ export const withAuthAndDispatch = (
 
         dispatch(isGetProduct(props.slug));
       }
-      
-      dispatch(actions());
+
+      dispatch(actions);
     }, [loading]);
 
     return user ? <WrappedComponent dispatch={dispatch} /> : null;

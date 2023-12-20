@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 
-export const useMouseLeave = (ref,setActive) => {
+export const useMouseLeave = (ref:any,setActive:any) => {
   useEffect(() => {
-    function handleClickOutside(event) {
+    function handleClickOutside(event:any) {
       if (ref.current && !ref.current.contains(event.target)) {
         setActive(false)
       }
