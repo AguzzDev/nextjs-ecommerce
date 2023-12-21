@@ -23,7 +23,7 @@ export const AllSteps = () => {
 
   const { step, navigation } = useStep({
     steps,
-    initialStep: getStepSaved === "step2" ? 1 : 0,
+    initialStep: (getStepSaved === "step2" && 1) || 0,
   });
 
   const stepId = step.id;
