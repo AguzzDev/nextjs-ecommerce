@@ -53,6 +53,7 @@ export const Slider: React.FC<SliderInterface> = ({ title, products }) => {
                     }`}
                   >
                     <Image
+                      alt="img"
                       src={product.img[0]}
                       layout="fill"
                       objectFit="cover"

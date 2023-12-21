@@ -16,7 +16,7 @@ export const DisclosureProducts: React.FC<DisclosureProductsInterface> = ({
   return (
     <>
       <Disclosure as="div" className="w-2/4 px-4 py-3 border border-gray-700">
-        {({ open }) => (
+        {({ open }: any) => (
           <>
             <Disclosure.Button className="flex items-center justify-between w-full px-2 text-gray-400">
               <p className="font-medium text-gray-900 uppercase">{title}</p>

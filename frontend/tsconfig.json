@@ -7,7 +7,7 @@
       "esnext"
     ],
     "allowJs": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "strictNullChecks": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,7 +20,7 @@
     "incremental": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "isolatedModules": true
   },
   "include": [

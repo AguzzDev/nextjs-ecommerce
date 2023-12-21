@@ -25,6 +25,7 @@ export const SliderDetails: React.FC<SliderDetailsInterface> = ({
             className="cursor-pointer"
           >
             <Image
+              alt="img"
               height={200}
               width={200}
               src={img}

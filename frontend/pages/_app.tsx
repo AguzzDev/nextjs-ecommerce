@@ -32,7 +32,7 @@ const MyApp: React.FC<AppInterface> = ({ Component, pageProps }) => {
     if (profile) {
       const dateNow = new Date().getTime();
       const { exp }: JwtPayload = jwtDecode(profile.accessToken);
-      const expirationTime = exp * 1000;
+      const expirationTime = exp! * 1000;
 
       if (dateNow >= expirationTime) {
         localStorage.removeItem("profile");

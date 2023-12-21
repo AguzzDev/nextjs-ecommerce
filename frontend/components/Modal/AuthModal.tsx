@@ -88,7 +88,7 @@ export const AuthModal = () => {
                         err: "",
                       }}
                       validationSchema={validateLogin}
-                      onSubmit={async (values, actions) => {
+                      onSubmit={async (values: any, actions: any) => {
                         try {
                           await dispatch(userLogin(values, setIsOpen));
 
@@ -100,7 +100,7 @@ export const AuthModal = () => {
                         }
                       }}
                     >
-                      {({ isSubmitting, errors }) => (
+                      {({ isSubmitting, errors }: any) => (
                         <Form className="flex flex-col mt-5 space-y-3">
                           <FieldBox
                             name="email"
@@ -155,7 +155,7 @@ export const AuthModal = () => {
                         err: "",
                       }}
                       validationSchema={validateRegister}
-                      onSubmit={async (values, actions) => {
+                      onSubmit={async (values: any, actions: any) => {
                         try {
                           await dispatch(userRegister(values, setIsOpen));
 
@@ -167,7 +167,7 @@ export const AuthModal = () => {
                         }
                       }}
                     >
-                      {({ values, isSubmitting, errors }) => (
+                      {({ values, isSubmitting, errors }: any) => (
                         <Form className="flex flex-col mt-5 space-y-3">
                           <FieldBox name="name" placeholder="Nombre" />
                           <FieldBox name="surname" placeholder="Apellido" />
@@ -198,9 +198,6 @@ export const AuthModal = () => {
                             />
                             <SelectBox
                               name="province"
-                              onClick={() => {
-                                filterProvinceId(values.province);
-                              }}
                               options={province.map(({ id, nombre }) => ({
                                 id,
                                 value: nombre,
