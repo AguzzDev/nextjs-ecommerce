@@ -1,4 +1,4 @@
-import { Field, FieldAttributes, useField } from "formik";
+import { Field, FieldAttributes, useField } from "formik/dist";
 
 interface Props extends FieldAttributes<any> {
   name: string;

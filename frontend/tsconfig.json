@@ -20,7 +20,7 @@
     "incremental": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "isolatedModules": true
   },
   "include": [

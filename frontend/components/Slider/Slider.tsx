@@ -46,28 +46,26 @@ export const Slider: React.FC<SliderInterface> = ({ title, products }) => {
               viewport={{ amount: 0.4, once: true }}
             >
               <Link href={`/products/${product.slug}`}>
-                <a>
-                  <div className="border border-gray-300 shadow-xl">
-                    <div
-                      className={`relative ${
-                        path === "/my_purchases" ? "h-[15rem]" : "h-[20rem]"
-                      }`}
-                    >
-                      <Image
-                        src={product.img[0]}
-                        layout="fill"
-                        objectFit="cover"
-                        className="absolute top-0 w-full"
-                      />
-                    </div>
-                    <div className="flex flex-col p-2">
-                      <h5 className="truncate">{product.title}</h5>
-                      {path !== "/my_purchases" ? (
-                        <p className="mt-2">{priceFormat(product.price)}</p>
-                      ) : null}
-                    </div>
+                <div className="border border-gray-300 shadow-xl">
+                  <div
+                    className={`relative ${
+                      path === "/my_purchases" ? "h-[15rem]" : "h-[20rem]"
+                    }`}
+                  >
+                    <Image
+                      src={product.img[0]}
+                      layout="fill"
+                      objectFit="cover"
+                      className="absolute top-0 w-full"
+                    />
                   </div>
-                </a>
+                  <div className="flex flex-col p-2">
+                    <h5 className="truncate">{product.title}</h5>
+                    {path !== "/my_purchases" ? (
+                      <p className="mt-2">{priceFormat(product.price)}</p>
+                    ) : null}
+                  </div>
+                </div>
               </Link>
 
               {path !== "/my_purchases" ? (

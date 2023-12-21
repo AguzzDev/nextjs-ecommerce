@@ -80,9 +80,7 @@ export const AuthModal = () => {
 
                 {!screen ? (
                   <div className="flex flex-col w-full p-10">
-                    <h3 className="text-center">
-                      Ingresa a tu cuenta
-                    </h3>
+                    <h3 className="text-center">Ingresa a tu cuenta</h3>
                     <Formik
                       initialValues={{
                         email: "",
@@ -136,9 +134,7 @@ export const AuthModal = () => {
                           Unite
                         </button>
                       </div>
-                      <Link href="/forget-password">
-                        <a>Olvide mi contraseña</a>
-                      </Link>
+                      <Link href="/forget-password">Olvide mi contraseña</Link>
                     </div>
                   </div>
                 ) : (

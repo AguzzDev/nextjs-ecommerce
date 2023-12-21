@@ -19,7 +19,7 @@ export const ProductsItems: React.FC<ProductsItemsInterface> = ({
       className="flex flex-col w-full h-[22rem] bg-white border-2 border-gray-300 rounded-md"
     >
       <Link href={`/products/${product?.slug}`} passHref>
-        <a className="flex items-center justify-center border-b border-gray-200 overflow-hidden h-screen">
+        <div className="flex items-center justify-center border-b border-gray-200 overflow-hidden h-screen">
           <motion.img
             whileHover={{ scale: 1.05 }}
             transition={{
@@ -30,12 +30,12 @@ export const ProductsItems: React.FC<ProductsItemsInterface> = ({
             alt="Product image"
             className="object-cover w-full h-full"
           />
-        </a>
+        </div>
       </Link>
       
       <div className="flex flex-col h-full px-3 pt-3">
         <Link href={`/products/${product?.slug}`} key={product?.slug} passHref>
-          <a className="text-lg cursor-pointer h-[10vh]">{product?.title}</a>
+          <p className="text-lg cursor-pointer h-[10vh]">{product?.title}</p>
         </Link>
 
         <div className="flex justify-between">

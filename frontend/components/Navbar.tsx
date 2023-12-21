@@ -26,11 +26,11 @@ export default function Navbar() {
 
         <div className="flex justify-center w-full space-x-5">
           <Link href="/catalogue" passHref>
-            <a>Catalogo</a>
+           Catalogo
           </Link>
           {user ? (
             <Link href="/my_purchases" passHref>
-              <a>Mis compras</a>
+              Mis compras
             </Link>
           ) : null}
         </div>
