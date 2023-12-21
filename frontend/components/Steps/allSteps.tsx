@@ -23,17 +23,14 @@ export const AllSteps = () => {
 
   const { step, navigation } = useStep({
     steps,
-    initialStep: 0,
+    initialStep: getStepSaved === "step2" ? 1 : 0,
   });
 
   const stepId = step.id;
   const props = { navigation, stepId, formData, setFormData };
 
   useEffect(() => {
-    localStorage.setItem(
-      "step",
-      parseInt(getStepSaved!) === 0 ? "step1" : "step2"
-    );
+    localStorage.setItem("step", stepId);
   }, [stepId]);
 
   switch (stepId) {
