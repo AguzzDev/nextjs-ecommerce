@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { UserIcon, XIcon } from "@heroicons/react/outline";
-import { useState, Fragment, useRef } from "react";
+import { useState, Fragment, useRef, ChangeEvent } from "react";
 import { Formik, Form } from "formik";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
@@ -29,11 +29,11 @@ export const AuthModal = () => {
   };
   useMouseLeave(modalRef, setIsOpen);
 
-  const filterProvinceId = (prov: string) => {
-    const provinceFilter = province.filter((p) => p.nombre === prov);
-    setProvinceId(provinceFilter[0]?.id);
+  const searchProvince = (e: ChangeEvent<HTMLInputElement>) => {
+    const filter = province.filter(({ nombre }) => nombre === e.target.value)[0]
+      .id;
+    setProvinceId(filter);
   };
-
   return (
     <>
       <button onClick={openModal}>
@@ -167,7 +167,7 @@ export const AuthModal = () => {
                         }
                       }}
                     >
-                      {({ values, isSubmitting, errors }: any) => (
+                      {({ isSubmitting, errors }: any) => (
                         <Form className="flex flex-col mt-5 space-y-3">
                           <FieldBox name="name" placeholder="Nombre" />
                           <FieldBox name="surname" placeholder="Apellido" />
@@ -198,6 +198,7 @@ export const AuthModal = () => {
                             />
                             <SelectBox
                               name="province"
+                              onChange={searchProvince}
                               options={province.map(({ id, nombre }) => ({
                                 id,
                                 value: nombre,
@@ -241,7 +242,7 @@ export const AuthModal = () => {
                     </Formik>
 
                     <div className="flex mt-1">
-                      <h1 className="mr-2 text-gray-400">¿Ya sos miembro?</h1>
+                      <p className="mr-2 text-gray-400">¿Ya sos miembro?</p>
                       <button className="underline" onClick={toggleScreen}>
                         Iniciar sesión
                       </button>

@@ -336,4 +336,5 @@ export interface SelectBoxInterface extends FieldAttributes<any> {
     value: string;
     text: string;
   }[];
+  searchProvince?: Function;
 }

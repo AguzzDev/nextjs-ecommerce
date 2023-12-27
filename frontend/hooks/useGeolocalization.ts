@@ -12,6 +12,7 @@ export const useGeolocalization = (provinceId: string) => {
       const resp = await axios.get(
         `${url}localidades?provincia=${provinceId}&campos=id,nombre&max=2000&orden=nombre`
       );
+
       setCitys(resp.data.localidades);
     } catch (error) {
       console.log(error);
@@ -28,11 +29,12 @@ export const useGeolocalization = (provinceId: string) => {
       }
     };
     getProvince();
-    getCitys();
   }, []);
 
   useEffect(() => {
-    getCitys();
+    if (provinceId) {
+      getCitys();
+    }
   }, [provinceId]);
 
   return { province, citys };

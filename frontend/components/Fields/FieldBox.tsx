@@ -1,12 +1,13 @@
-import { Field, FieldAttributes, useField } from "formik/dist";
+import { Field, FieldAttributes, useField } from "formik";
 
 interface Props extends FieldAttributes<any> {
   name: string;
   placeholder?: string;
+  type?: string;
 }
 
 export const FieldBox: React.FC<Props> = (props) => {
-  const [field, meta] = useField(props.name);
+  const [field, meta] = useField(props);
 
   return (
     <>
@@ -14,8 +15,7 @@ export const FieldBox: React.FC<Props> = (props) => {
         {...field}
         {...props}
         className="w-full px-5 py-2 border border-gray-300 rounded-md"
-        type={props.type ? props.type : "text"}
-        placeholder={props.placeholder}
+        type={props.type || "text"}
         autoComplete="off"
       />
       {meta.error ? <p className="text-xs text-red-500">{meta.error}</p> : null}
