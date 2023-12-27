@@ -37,7 +37,7 @@ export const createPayment = asyncWrapper(async (req, res) => {
     },
     items: [],
     notification_url:
-      "https://2adc-190-226-216-176.ngrok-free.app/api/notifications",
+      "https://api.ecommerce-app.agustin-ribotta.xyz/api/notifications",
     back_urls: {
       success: `${process.env.CORS_ORIGIN}/success`,
       failure: `${process.env.CORS_ORIGIN}/failed`,
